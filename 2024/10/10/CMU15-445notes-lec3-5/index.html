@@ -289,9 +289,9 @@
 
                     
                          <h1 id="lec1"><a href="#lec1" class="headerlink" title="lec1"></a>lec1</h1><p>cpp Q&amp;A学习网站</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/" >https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/">https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/<i class="fas fa-external-link-alt"></i></a></p>
 <p>关系型数据模型中的 , 物理和逻辑分离的理解</p>
-<p><img   src="/CMU15-445notes-lec3-5/image-20241010160609376.png"  alt="image-20241010160609376"></p>
+<p><img src="/2024/10/10/CMU15-445notes-lec3-5/image-20241010160609376.png" alt="image-20241010160609376"></p>
 <h1 id="lec2-advanced-sql"><a href="#lec2-advanced-sql" class="headerlink" title="lec2 advanced sql"></a>lec2 advanced sql</h1><p>了解即可</p>
 <h1 id="lec3-storage-1"><a href="#lec3-storage-1" class="headerlink" title="lec3 storage 1"></a>lec3 storage 1</h1><h6 id="non-volatile存储介质"><a href="#non-volatile存储介质" class="headerlink" title="non-volatile存储介质"></a>non-volatile存储介质</h6><p>The DBMS assumes that the primary storage location of the database is on non-volatile disk.</p>
 <p>Random access on non-volatile storage is almost always much slower than sequential access. </p>
@@ -314,11 +314,11 @@
 </ul>
 <p>2 ,3 都是基于non-volatile存储介质的的特性</p>
 <h6 id="why-not-use-the-OS"><a href="#why-not-use-the-OS" class="headerlink" title="why not use the OS?"></a>why not use the OS?</h6><p>下面几点都不理解 , 看视频理解一下</p>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728372730114-34ec4c43-11bd-4c1f-ac80-81aa9ccb9e99.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728372730114-34ec4c43-11bd-4c1f-ac80-81aa9ccb9e99.png" alt="img"></p>
 <h6 id="不同层面的page的区别"><a href="#不同层面的page的区别" class="headerlink" title="不同层面的page的区别"></a>不同层面的page的区别</h6><p>hardware page是“failsafe” write的最小单元 , 所以可以看出主流数据库的database page大小一般都是4kb的整数倍</p>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728379889258-67cd1422-0fd9-43de-a817-a1ec6ecb874e.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728379889258-67cd1422-0fd9-43de-a817-a1ec6ecb874e.png" alt="img"></p>
 <h6 id="database如何在disk上represent–File层面"><a href="#database如何在disk上represent–File层面" class="headerlink" title="database如何在disk上represent–File层面"></a>database如何在disk上represent–File层面</h6><p>file和database的关系 :db由多个file组成 ,file的基本组成单元是database page, </p>
-<p>按照file中page的组织形式分为下面几种:<br><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728380406591-fdb984cc-23fb-4f93-9ff8-dd576e94b174.png"  alt="img"></p>
+<p>按照file中page的组织形式分为下面几种:<br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728380406591-fdb984cc-23fb-4f93-9ff8-dd576e94b174.png" alt="img"></p>
 <p>本lec仅介绍了Heap File :</p>
 <p>file和page的映射关系: 需要通过metadata来存储</p>
 <p>file的append操作:寻找有空闲空间的page直接append , 时间复杂度较低(可能在这里和heap有点相似?)</p>
@@ -330,9 +330,9 @@
 <li>Compression &#x2F; Encoding Meta-data :data部分的数据可以进行压缩 , 这个字段用于存储压缩&#x2F;解压相关的信息</li>
 <li>Schema Information 这对应于后面的self-contain的要求: self-contain是指, 这一个page中的metadata还会存储该tuple对应的schema的相关信息(而不是单独用一个page来专门存储scheme的信息)</li>
 </ul>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728381114504-e795938d-7b41-4846-9205-a7bd4c2ae9ab.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728381114504-e795938d-7b41-4846-9205-a7bd4c2ae9ab.png" alt="img"></p>
 <h6 id="page-layout–data部分"><a href="#page-layout–data部分" class="headerlink" title="page layout–data部分"></a>page layout–data部分</h6><p>有3类形式来组织数据: 这里的Log-structued , 在很多recovery的场景下会借鉴它的思想 (比如xv6的文件系统的故障恢复)</p>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728389709432-32933e6a-3ac7-4fbd-aec1-dff2b3e3592f.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728389709432-32933e6a-3ac7-4fbd-aec1-dff2b3e3592f.png" alt="img"></p>
 <p>lec3暂时只考虑tuple oriented场景</p>
 <p>这里值得学习的点在于它是如何考虑tuple oriented场景下可能存在的问题, 如何思考, 从哪切入, 以及如何解决</p>
 <ul>
@@ -340,15 +340,15 @@
 <li>切入点: 默认了字段长度都一致, 但实际并非如此</li>
 <li>idea2: slot array (无论是前者还是后者, 都需要在data部分用类似于header的部分来存储tuple的meta信息, 但是由于这是特定针对于tuple oriented的case, 不具有普适性, 所以这些字段属于是data中的header, 而不是page中的header)</li>
 </ul>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390555172-0bd03aab-6188-4ed1-b6e4-0613fd5dd9ec.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390555172-0bd03aab-6188-4ed1-b6e4-0613fd5dd9ec.png" alt="img"></p>
 <h6 id="tuple-layout"><a href="#tuple-layout" class="headerlink" title="tuple layout"></a>tuple layout</h6><ul>
 <li>真是套娃啊, 又是header+data的架构, 归纳总结一下, 初步可以看出这种设计思想很基础重要</li>
 <li>这里的header信息, visibility info , 类似与前面的transaction visibility, 用来做并发控制, 保证这条tuple同时最多只能被一个thread修改</li>
 <li>tuple层面的layout 自然不用存储schema的信息, 它的上级都存好了</li>
 </ul>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390780043-350ed8cd-6af4-4b64-80a3-5a8f6b4a7667.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390780043-350ed8cd-6af4-4b64-80a3-5a8f6b4a7667.png" alt="img"></p>
 <h6 id="tuple场景下的增删改操作"><a href="#tuple场景下的增删改操作" class="headerlink" title="tuple场景下的增删改操作"></a>tuple场景下的增删改操作</h6><p>这里注意它的删除操作并没有执行物理上的直接删除, 而是标记为deleted就结束了 , 这看起来和后面的Log模式的存储有些类似 , 但实际不然 . 再往后面想一点: 当新执行一个insert操作时, 我们会把mark as deleted的slot视为和free的slot等价, 后续直接对这个slot的内容进行覆盖. 所以, 这里没有也没必要对这个slot再进行reset</p>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728440261707-8b4fd844-494d-4877-a04c-b82ff080b45f.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728440261707-8b4fd844-494d-4877-a04c-b82ff080b45f.png" alt="img"></p>
 <h1 id="lec4-storage-2"><a href="#lec4-storage-2" class="headerlink" title="lec4 storage 2"></a>lec4 storage 2</h1><p>本lec主要介绍另外两种page layout </p>
 <h6 id="TUPLE-ORIENTED-STORAGE的问题"><a href="#TUPLE-ORIENTED-STORAGE的问题" class="headerlink" title="TUPLE-ORIENTED STORAGE的问题"></a>TUPLE-ORIENTED STORAGE的问题</h6><p>学习一下它的思考切入点</p>
 <h6 id="LSM-tree"><a href="#LSM-tree" class="headerlink" title="LSM tree"></a>LSM tree</h6><p>什么是LSM? 它怎么和tree扯上关系?</p>
@@ -361,14 +361,14 @@
 <li><strong>数据合并</strong>：随着时间的推移，Level 1的SST文件可能会填满，系统会自动将其合并并移动到Level 2，保证更低层级的数据量更大而且有序。</li>
 <li><strong>检索效率</strong>：在查询时，系统首先会检查MemTable（Level 0），如果未找到，再依次检查Level 1，Level 2，直到Level k。若在某一层级找到匹配项，系统能快速返回结果。</li>
 </ul>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442315646-fa2b67a2-7fd3-4826-a638-945abc77494d.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442315646-fa2b67a2-7fd3-4826-a638-945abc77494d.png" alt="img"></p>
 <p>三种OP: get , put , delete 实际存储的entry中只有put和delete</p>
 <h6 id="LSM-tree-vs-B-tree"><a href="#LSM-tree-vs-B-tree" class="headerlink" title="LSM tree vs B tree"></a>LSM tree vs B tree</h6><ul>
 <li>两者对应于不同的page layout: b tree-tuple oriented , LSM tree: log structured</li>
 <li>可以看出, page layout和page之间的组织关系是强相关的</li>
 <li>LSM的read&#x2F;search操作对比于write相当耗时</li>
 </ul>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442411960-c67c7ebe-4855-472a-9227-d57d091ecb75.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442411960-c67c7ebe-4855-472a-9227-d57d091ecb75.png" alt="img"></p>
 <h6 id="如何优化LSM-tree的search耗时问题"><a href="#如何优化LSM-tree的search耗时问题" class="headerlink" title="如何优化LSM tree的search耗时问题?"></a>如何优化LSM tree的search耗时问题?</h6><ul>
 <li>每个level设置summary info , 通过Bloom filter快速skip掉不必要的level</li>
 </ul>
@@ -492,10 +492,10 @@
 </ul>
 <p>布隆过滤器常用于网络爬虫、数据库缓存等场景，尤其是在需要处理大量数据时。</p>
 <h6 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h6><p>在看下面的部分的时候有点云里雾里, 主要是当时对index还不够理解 , 下面这个博客讲得挺好</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://www.modb.pro/db/134175" >https://www.modb.pro/db/134175<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://www.modb.pro/db/134175">https://www.modb.pro/db/134175<i class="fas fa-external-link-alt"></i></a></p>
 <h6 id="INDEX-ORGANIZED-STORAGE"><a href="#INDEX-ORGANIZED-STORAGE" class="headerlink" title="INDEX-ORGANIZED STORAGE"></a>INDEX-ORGANIZED STORAGE</h6><p>本质上就是上面博客中的「有序数组」的模式</p>
 <h6 id="数据库中的浮点存储"><a href="#数据库中的浮点存储" class="headerlink" title="数据库中的浮点存储"></a>数据库中的浮点存储</h6><p>我们知道IEEE的方式, 二进制来存储浮点数是不精确的 , 很多业务场景是无法容忍这种误差的 , 数据库对此的解决方案是, 「空间换精确度」 :</p>
-<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728458471400-41a584ce-2e2b-4ca4-908d-d9ded6a2ccd9.png"  alt="img"></p>
+<p><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728458471400-41a584ce-2e2b-4ca4-908d-d9ded6a2ccd9.png" alt="img"></p>
 <h1 id="lec5-storage-models-compression"><a href="#lec5-storage-models-compression" class="headerlink" title="lec5 storage models&amp; compression"></a>lec5 storage models&amp; compression</h1><h6 id="db-workload"><a href="#db-workload" class="headerlink" title="db workload"></a>db workload</h6><ul>
 <li>OLTP</li>
 <li>OLAP</li>
@@ -508,7 +508,7 @@
 <li>PAX(partition atttibute across)</li>
 </ul>
 <h6 id="DATABASE-COMPRESSION"><a href="#DATABASE-COMPRESSION" class="headerlink" title="DATABASE COMPRESSION"></a>DATABASE COMPRESSION</h6><p>lec里介绍了很多种压缩算法, 暂时没有细看</p>
-<p>学习的时候还是应当具备一个全局视野:<br><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728462668698-1afae49d-9b51-4c9a-a3a6-6a1d637646f9.png"  alt="img"></p>
+<p>学习的时候还是应当具备一个全局视野:<br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728462668698-1afae49d-9b51-4c9a-a3a6-6a1d637646f9.png" alt="img"></p>
 
                     
                 </div>
