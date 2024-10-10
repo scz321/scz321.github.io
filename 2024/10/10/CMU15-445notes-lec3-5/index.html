@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Orange@antgroup">
+    
+    <title>
+        
+            CMU15-445notes-lec3-5 |
+        
+        Orange Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Orange Blog","author":"Orange@antgroup","avatar":"/images/avatar.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":false,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":false},"social_contact":{"enable":false,"links":{"github":"scz321","weixin":"surf_and_die","qq":1543132812,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":null,"category":false,"tag":false,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"toc":{"enable":false,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":null,"reaction":false,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":false},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Orange Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        CMU15-445notes-lec3-5
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Orange@antgroup</span>
+                                
+                                    <span class="author-badge">Lv1</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-10-10 14:38:00</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Thu Oct 10 2024 14:43:12 GMT+0800">2024-10-10 14:43:12</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/">cs公开课学习</a></li>
+                        
+                    
+                            <li class="category-item">&nbsp;<i class="icon fas fa-angle-right"></i>&nbsp;<a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/CMU15-445/">CMU15-445</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="lec1"><a href="#lec1" class="headerlink" title="lec1"></a>lec1</h1><p>cpp Q&amp;A学习网站</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/" >https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/<i class="fas fa-external-link-alt"></i></a></p>
+<p>关系型数据模型中的 , 物理和逻辑分离的理解</p>
+<h1 id="lec2-advanced-sql"><a href="#lec2-advanced-sql" class="headerlink" title="lec2 advanced sql"></a>lec2 advanced sql</h1><p>了解即可</p>
+<h1 id="lec3-storage-1"><a href="#lec3-storage-1" class="headerlink" title="lec3 storage 1"></a>lec3 storage 1</h1><h6 id="non-volatile存储介质"><a href="#non-volatile存储介质" class="headerlink" title="non-volatile存储介质"></a>non-volatile存储介质</h6><p>The DBMS assumes that the primary storage location of the database is on non-volatile disk.</p>
+<p>Random access on non-volatile storage is almost always much slower than sequential access. </p>
+<p>DBMS will want to maximize sequential access.</p>
+<ul>
+<li>how? 2way</li>
+</ul>
+<h6 id="DBMS的SYSTEM-DESIGN-GOALS"><a href="#DBMS的SYSTEM-DESIGN-GOALS" class="headerlink" title="DBMS的SYSTEM DESIGN GOALS"></a>DBMS的SYSTEM DESIGN GOALS</h6><ul>
+<li><p>管理远超memory的数据量</p>
+</li>
+<li><ul>
+<li>这里memory是「内存」</li>
+<li>how: 常用数据cache到memory , 多的存储到disk</li>
+</ul>
+</li>
+<li><p>处理读写操作</p>
+</li>
+<li><p>maximize sequential access.</p>
+</li>
+</ul>
+<p>2 ,3 都是基于non-volatile存储介质的的特性</p>
+<h6 id="why-not-use-the-OS"><a href="#why-not-use-the-OS" class="headerlink" title="why not use the OS?"></a>why not use the OS?</h6><p>下面几点都不理解 , 看视频理解一下</p>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728372730114-34ec4c43-11bd-4c1f-ac80-81aa9ccb9e99.png"  alt="img"></p>
+<h6 id="不同层面的page的区别"><a href="#不同层面的page的区别" class="headerlink" title="不同层面的page的区别"></a>不同层面的page的区别</h6><p>hardware page是“failsafe” write的最小单元 , 所以可以看出主流数据库的database page大小一般都是4kb的整数倍</p>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728379889258-67cd1422-0fd9-43de-a817-a1ec6ecb874e.png"  alt="img"></p>
+<h6 id="database如何在disk上represent–File层面"><a href="#database如何在disk上represent–File层面" class="headerlink" title="database如何在disk上represent–File层面"></a>database如何在disk上represent–File层面</h6><p>file和database的关系 :db由多个file组成 ,file的基本组成单元是database page, </p>
+<p>按照file中page的组织形式分为下面几种:<br><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728380406591-fdb984cc-23fb-4f93-9ff8-dd576e94b174.png"  alt="img"></p>
+<p>本lec仅介绍了Heap File :</p>
+<p>file和page的映射关系: 需要通过metadata来存储</p>
+<p>file的append操作:寻找有空闲空间的page直接append , 时间复杂度较低(可能在这里和heap有点相似?)</p>
+<h6 id="page-layout–header部分"><a href="#page-layout–header部分" class="headerlink" title="page layout–header部分"></a>page layout–header部分</h6><p>page分为header和data两部分</p>
+<p>这里的header其实就是page的meta data</p>
+<p>这里主要是理解下面的几个字段:</p>
+<ul>
+<li>Transaction Visibility , 这个字段用于支持原子性事务的实现 , 考虑这样一个示例场景(自己臆想的例子): 多个事务都尝试对这个page进行修改, 此时只有对于第一个获取到这个page的事务来说, Transaction Visibility位为1表示可见, 后续的事务都不可见, 那么后面的事务就会block住, 保证事务的原子性</li>
+<li>Compression &#x2F; Encoding Meta-data :data部分的数据可以进行压缩 , 这个字段用于存储压缩&#x2F;解压相关的信息</li>
+<li>Schema Information 这对应于后面的self-contain的要求: self-contain是指, 这一个page中的metadata还会存储该tuple对应的schema的相关信息(而不是单独用一个page来专门存储scheme的信息)</li>
+</ul>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728381114504-e795938d-7b41-4846-9205-a7bd4c2ae9ab.png"  alt="img"></p>
+<h6 id="page-layout–data部分"><a href="#page-layout–data部分" class="headerlink" title="page layout–data部分"></a>page layout–data部分</h6><p>有3类形式来组织数据: 这里的Log-structued , 在很多recovery的场景下会借鉴它的思想 (比如xv6的文件系统的故障恢复)</p>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728389709432-32933e6a-3ac7-4fbd-aec1-dff2b3e3592f.png"  alt="img"></p>
+<p>lec3暂时只考虑tuple oriented场景</p>
+<p>这里值得学习的点在于它是如何考虑tuple oriented场景下可能存在的问题, 如何思考, 从哪切入, 以及如何解决</p>
+<ul>
+<li>idea1:Strawman Idea: Keep track of the number of tuples in a page and then just append a new tuple to the end</li>
+<li>切入点: 默认了字段长度都一致, 但实际并非如此</li>
+<li>idea2: slot array (无论是前者还是后者, 都需要在data部分用类似于header的部分来存储tuple的meta信息, 但是由于这是特定针对于tuple oriented的case, 不具有普适性, 所以这些字段属于是data中的header, 而不是page中的header)</li>
+</ul>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390555172-0bd03aab-6188-4ed1-b6e4-0613fd5dd9ec.png"  alt="img"></p>
+<h6 id="tuple-layout"><a href="#tuple-layout" class="headerlink" title="tuple layout"></a>tuple layout</h6><ul>
+<li>真是套娃啊, 又是header+data的架构, 归纳总结一下, 初步可以看出这种设计思想很基础重要</li>
+<li>这里的header信息, visibility info , 类似与前面的transaction visibility, 用来做并发控制, 保证这条tuple同时最多只能被一个thread修改</li>
+<li>tuple层面的layout 自然不用存储schema的信息, 它的上级都存好了</li>
+</ul>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728390780043-350ed8cd-6af4-4b64-80a3-5a8f6b4a7667.png"  alt="img"></p>
+<h6 id="tuple场景下的增删改操作"><a href="#tuple场景下的增删改操作" class="headerlink" title="tuple场景下的增删改操作"></a>tuple场景下的增删改操作</h6><p>这里注意它的删除操作并没有执行物理上的直接删除, 而是标记为deleted就结束了 , 这看起来和后面的Log模式的存储有些类似 , 但实际不然 . 再往后面想一点: 当新执行一个insert操作时, 我们会把mark as deleted的slot视为和free的slot等价, 后续直接对这个slot的内容进行覆盖. 所以, 这里没有也没必要对这个slot再进行reset</p>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728440261707-8b4fd844-494d-4877-a04c-b82ff080b45f.png"  alt="img"></p>
+<h1 id="lec4-storage-2"><a href="#lec4-storage-2" class="headerlink" title="lec4 storage 2"></a>lec4 storage 2</h1><p>本lec主要介绍另外两种page layout </p>
+<h6 id="TUPLE-ORIENTED-STORAGE的问题"><a href="#TUPLE-ORIENTED-STORAGE的问题" class="headerlink" title="TUPLE-ORIENTED STORAGE的问题"></a>TUPLE-ORIENTED STORAGE的问题</h6><p>学习一下它的思考切入点</p>
+<h6 id="LSM-tree"><a href="#LSM-tree" class="headerlink" title="LSM tree"></a>LSM tree</h6><p>什么是LSM? 它怎么和tree扯上关系?</p>
+<p>LSM: Log-structured Merged </p>
+<p>tree:LSM是page内部的layout, tree是整个database文件的page之间的layout 之所以要用这种tree或者说是leveling的架构, 是因为:</p>
+<p>假设有一个简单的键值存储系统：</p>
+<ul>
+<li><strong>初始写入</strong>：数据写入Level 0的MemTable。</li>
+<li><strong>刷新过程</strong>：当MemTable达到一定的大小时，它会被刷新到Level 1，形成一个新的SST文件。</li>
+<li><strong>数据合并</strong>：随着时间的推移，Level 1的SST文件可能会填满，系统会自动将其合并并移动到Level 2，保证更低层级的数据量更大而且有序。</li>
+<li><strong>检索效率</strong>：在查询时，系统首先会检查MemTable（Level 0），如果未找到，再依次检查Level 1，Level 2，直到Level k。若在某一层级找到匹配项，系统能快速返回结果。</li>
+</ul>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442315646-fa2b67a2-7fd3-4826-a638-945abc77494d.png"  alt="img"></p>
+<p>三种OP: get , put , delete 实际存储的entry中只有put和delete</p>
+<h6 id="LSM-tree-vs-B-tree"><a href="#LSM-tree-vs-B-tree" class="headerlink" title="LSM tree vs B tree"></a>LSM tree vs B tree</h6><ul>
+<li>两者对应于不同的page layout: b tree-tuple oriented , LSM tree: log structured</li>
+<li>可以看出, page layout和page之间的组织关系是强相关的</li>
+<li>LSM的read&#x2F;search操作对比于write相当耗时</li>
+</ul>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728442411960-c67c7ebe-4855-472a-9227-d57d091ecb75.png"  alt="img"></p>
+<h6 id="如何优化LSM-tree的search耗时问题"><a href="#如何优化LSM-tree的search耗时问题" class="headerlink" title="如何优化LSM tree的search耗时问题?"></a>如何优化LSM tree的search耗时问题?</h6><ul>
+<li>每个level设置summary info , 通过Bloom filter快速skip掉不必要的level</li>
+</ul>
+<p>Bloom filter（布隆过滤器）是一种空间效率高且用于测试某个元素是否在一个集合中的概率性数据结构。它可以快速判断某个元素是否可能在集合中，当查询结果为“可能在”时，可能是假阳性（即元素实际上不在集合中）；而如果查询结果为“肯定不在”，则该元素一定不在集合中。</p>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>Bloom filter 使用多个哈希函数和一个位数组来表示集合。其基本工作过程如下：</p>
+<ol>
+<li><strong>初始化</strong>：创建一个大小为 m 的位数组（全为0），以及 k 个独立的哈希函数。</li>
+<li><strong>添加元素</strong>：</li>
+</ol>
+<ul>
+<li><ul>
+<li>对于每一个要添加的元素，使用 k 个哈希函数，得到 k 个哈希值。这些哈希值对应于位数组的索引位置，将这些位置的值设为1。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>查询元素</strong>：</li>
+</ol>
+<ul>
+<li><ul>
+<li>对于每一个要查询的元素，使用相同的 k 个哈希函数获得 k 个索引位置。</li>
+<li>检查这些索引位置的值。如果所有这些位置都是1，则返回“可能在”；如果有任意一个位置是0，则返回“肯定不在”。</li>
+</ul>
+</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设你想用布隆过滤器来检测一个学生名单，包含：“Alice”、“Bob”和“Charlie”。</p>
+<ol>
+<li><strong>初始化</strong>：一个位数组大小为10（全为0），假设使用3个哈希函数。</li>
+<li><strong>添加元素</strong>：</li>
+</ol>
+<ul>
+<li><ul>
+<li>添加“Alice”：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>哈希函数1得到索引2，哈希函数2得到索引5，哈希函数3得到索引7。</li>
+<li>位数组变为 <code>[0, 0, 1, 0, 0, 1, 0, 1, 0, 0]</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>添加“Bob”：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>哈希函数1得到索引1，哈希函数2得到索引3，哈希函数3得到索引6。</li>
+<li>位数组变为 <code>[0, 1, 1, 1, 0, 1, 1, 1, 0, 0]</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>添加“Charlie”：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>哈希函数1得到索引4，哈希函数2得到索引0，哈希函数3得到索引3。</li>
+<li>位数组最终变为 <code>[1, 1, 1, 1, 1, 1, 1, 1, 0, 0]</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>查询元素</strong>：</li>
+</ol>
+<ul>
+<li><ul>
+<li>查询“Alice”：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>哈希函数得到索引2, 5, 7，检查位数组相应位置的值，都是1，返回“可能在”。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>查询“David”：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>哈希函数得到索引0, 3, 8，检查位数组：</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>索引0是1（可能在），索引3是1（可能在），索引8是0（肯定不在），返回“肯定不在”。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li><p><strong>优点</strong>：</p>
+</li>
+<li><ul>
+<li>效率高，空间占用少，适合存储大量元素。</li>
+<li>查询速度快。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+</li>
+<li><ul>
+<li>可能产生假阳性（并不意味着该元素在集合中）。</li>
+<li>无法删除元素（传统布隆过滤器不能实现删除操作）。</li>
+</ul>
+</li>
+</ul>
+<p>布隆过滤器常用于网络爬虫、数据库缓存等场景，尤其是在需要处理大量数据时。</p>
+<h6 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h6><p>在看下面的部分的时候有点云里雾里, 主要是当时对index还不够理解 , 下面这个博客讲得挺好</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.modb.pro/db/134175" >https://www.modb.pro/db/134175<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="INDEX-ORGANIZED-STORAGE"><a href="#INDEX-ORGANIZED-STORAGE" class="headerlink" title="INDEX-ORGANIZED STORAGE"></a>INDEX-ORGANIZED STORAGE</h6><p>本质上就是上面博客中的「有序数组」的模式</p>
+<h6 id="数据库中的浮点存储"><a href="#数据库中的浮点存储" class="headerlink" title="数据库中的浮点存储"></a>数据库中的浮点存储</h6><p>我们知道IEEE的方式, 二进制来存储浮点数是不精确的 , 很多业务场景是无法容忍这种误差的 , 数据库对此的解决方案是, 「空间换精确度」 :</p>
+<p><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728458471400-41a584ce-2e2b-4ca4-908d-d9ded6a2ccd9.png"  alt="img"></p>
+<h1 id="lec5-storage-models-compression"><a href="#lec5-storage-models-compression" class="headerlink" title="lec5 storage models&amp; compression"></a>lec5 storage models&amp; compression</h1><h6 id="db-workload"><a href="#db-workload" class="headerlink" title="db workload"></a>db workload</h6><ul>
+<li>OLTP</li>
+<li>OLAP</li>
+<li>混合</li>
+</ul>
+<h6 id="storage-model"><a href="#storage-model" class="headerlink" title="storage model"></a>storage model</h6><ul>
+<li>NSM</li>
+<li>DSM( column store)</li>
+<li>分别的优缺点? 适用哪种workload?</li>
+<li>PAX(partition atttibute across)</li>
+</ul>
+<h6 id="DATABASE-COMPRESSION"><a href="#DATABASE-COMPRESSION" class="headerlink" title="DATABASE COMPRESSION"></a>DATABASE COMPRESSION</h6><p>lec里介绍了很多种压缩算法, 暂时没有细看</p>
+<p>学习的时候还是应当具备一个全局视野:<br><img   src="https://intranetproxy.alipay.com/skylark/lark/0/2024/png/147157284/1728462668698-1afae49d-9b51-4c9a-a3a6-6a1d637646f9.png"  alt="img"></p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/CMU15-445/">CMU15-445</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Orange@antgroup</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
