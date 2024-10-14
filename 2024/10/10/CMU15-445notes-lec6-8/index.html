@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Orange@antgroup">
+    
+    <title>
+        
+            CMU15-445notes-lec6-8 |
+        
+        Orange Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Orange Blog","author":"Orange@antgroup","avatar":"/images/avatar.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":false,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":false},"social_contact":{"enable":false,"links":{"github":"scz321","weixin":"surf_and_die","qq":1543132812,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":null,"category":false,"tag":false,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"toc":{"enable":false,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":null,"reaction":false,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":false},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Orange Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        CMU15-445notes-lec6-8
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Orange@antgroup</span>
+                                
+                                    <span class="author-badge">Lv1</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-10-10 17:55:09</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Mon Oct 14 2024 19:48:06 GMT+0800">2024-10-14 19:48:06</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/">cs公开课学习</a></li>
+                        
+                    
+                            <li class="category-item">&nbsp;<i class="icon fas fa-angle-right"></i>&nbsp;<a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/CMU15-445/">CMU15-445</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <p>[toc]</p>
+<h1 id="lec6-memory-management"><a href="#lec6-memory-management" class="headerlink" title="lec6 memory management"></a>lec6 memory management</h1><p>前面几讲介绍了数据在disk上的存储形式 , 本lec讲述DBMS如何管理主存以及数据在disk和memory(主存)之间的移动</p>
+<h6 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h6><p>主要依据局部性原理</p>
+<ul>
+<li>空间上: 物理存储和主存中的布局尽量相似</li>
+<li>时间上:尽可能少地减少主存-disk的IO次数</li>
+</ul>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011162928959.png" alt="image-20241011162928959"></p>
+<h6 id="我们buffer-pool有自己的page-table"><a href="#我们buffer-pool有自己的page-table" class="headerlink" title="我们buffer pool有自己的page table"></a>我们buffer pool有自己的page table</h6><p>首先声明, 这里的page table和OS的page table在作用上是类似的, 并且在实际上也并不会冗余&#x2F;冲突 , 后面会提到, DBMS针对disk IO的一般设计是跳过OS的缓存&#x2F;页表机制来更好地管理, 具体原因会在后面详细叙述</p>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011163527902.png" alt="image-20241011163527902"></p>
+<h6 id="buffer-pool中的meta-data"><a href="#buffer-pool中的meta-data" class="headerlink" title="buffer pool中的meta data"></a>buffer pool中的meta data</h6><p>首先是整个buffer pool的meta data:</p>
+<ul>
+<li>page table:存储页号和frame的映射关系</li>
+<li>作为一个共享的数据结构 , 需要考虑线程安全性 </li>
+<li>这里的线程安全一般使用latch而非lock实现, 两者的具体区别见下文</li>
+</ul>
+<p>每个frame的meta data(内存中的page一般称为frame)</p>
+<ul>
+<li>dirty bit: 标识当前frame是否需要被写入到disk</li>
+<li>Pin: 辅助bit, 会影响当前frame在flush时的行为</li>
+<li>Reference Counter:引用计数, 很好理解</li>
+</ul>
+<h6 id="OS的lock和DBMS的latches的区别"><a href="#OS的lock和DBMS的latches的区别" class="headerlink" title="OS的lock和DBMS的latches的区别"></a>OS的lock和DBMS的latches的区别</h6><p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011170044292.png" alt="image-20241011170044292"></p>
+<p>LOCK:</p>
+<ul>
+<li><strong>保护数据库的逻辑内容</strong>：锁主要用于保护数据库中数据的逻辑一致性。例如，当一个事务正在更新一行数据时，锁确保没有其他事务可以同时修改该行，进而防止数据不一致。</li>
+<li><strong>事务持续时间内持有</strong>：锁会持续到事务结束为止。这种设计是为了确保整个事务过程中数据一致性。</li>
+<li><strong>需要能够回滚更改</strong>：由于锁通常用于事务级别的操作，因此如果事务失败或需要回滚，锁可以帮助恢复到先前的状态。</li>
+</ul>
+<p>假设有一个银行应用程序，用户A和用户B同时试图修改相同的用户账户记录。锁机制会确保当用户A正在修改账户余额时，用户B必须等待用户A的事务完成后才能进行修改。这就防止了账户数据的不一致性。</p>
+<p>Latches:</p>
+<ul>
+<li><strong>保护DBMS内部数据结构的关键部分</strong>：latches更多用于保护内存中的数据结构，如缓冲区或索引节点，防止多个线程同时修改这些数据结构。</li>
+<li><strong>操作持续时间内持有</strong>：闩锁仅在需要的操作期间持有，通常比锁的持有时间短很多。因此，它们可以在非常快速的频繁操作中使用。</li>
+<li><strong>不需要能够回滚更改</strong>：因为latches主要是用于短期内存操作，因此没有回滚的需求。</li>
+</ul>
+<p>假设在一个数据库中有一个缓冲区池，当一个线程正在刷新缓冲区中的页到磁盘时，另一个线程试图读取或写入同一个缓冲区。latches会临时保护这个缓冲区，确保只有一个线程可以执行该操作，另外一个线程需等待。由于这些操作是在内存中进行，且无需考虑数据不一致性，操作完成后，latches会立即释放。</p>
+<h6 id="buffer-pool-优化"><a href="#buffer-pool-优化" class="headerlink" title="buffer pool 优化"></a>buffer pool 优化</h6><p>重在体会一下它的思考切入点</p>
+<ul>
+<li>从并发性能角度: 通过设置多个buffer pool来减少latch contention </li>
+<li>从减少disk IO的角度: <ul>
+<li>prefetch</li>
+<li>scan sharing通过「共享」来减少重复扫描带来的冗余</li>
+</ul>
+</li>
+<li>bypass 策略: 一次性的page直接就不进buffer pool</li>
+</ul>
+<p>具体的流程在ppt里展示地很清楚, 看几个例子即可理解</p>
+<h6 id="buffer-pool替换策略"><a href="#buffer-pool替换策略" class="headerlink" title="buffer pool替换策略"></a>buffer pool替换策略</h6><ul>
+<li>LRU</li>
+<li>CLOCK:近似版、简化版的LRU</li>
+</ul>
+<p>上面两种问题的缺陷: sequence flooding问题</p>
+<p>抛开workload谈优化都是耍流氓 !  LRU、CLOCK的机制就很不适用于OLAP这种workload(因为会经常)</p>
+<p>还是应该养成这种意识, 抛开workload讨论这些优化策略都是耍流氓, 不能为了优化而优化</p>
+<ul>
+<li>LRU-K:</li>
+</ul>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011172712576.png" alt="image-20241011172712576"></p>
+<h6 id="dirty-page"><a href="#dirty-page" class="headerlink" title="dirty page"></a>dirty page</h6><p>fast path和slow path的trade off在系统优化中也是一个很常见的场景</p>
+<p>一般的目标, 我们都希望在大部分时候系统都走fast path</p>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011173333510.png" alt="image-20241011173333510"></p>
+<h6 id="OS-kernel-page-table-vs-buffer-pool-why-not-OS"><a href="#OS-kernel-page-table-vs-buffer-pool-why-not-OS" class="headerlink" title="OS kernel page table vs buffer pool(why not OS?)"></a>OS kernel page table vs buffer pool(why not OS?)</h6><p>首先, 我们要知道为什么DBMS使用自己的buffer pool而不用OS的page cache</p>
+<p>简单来说: DBMS需要感知到每个frame更详细的信息, 进行更多样化的管理, 而OS的page cache仅仅能缓存</p>
+<p>这里的多样化的管理具体包括:</p>
+<ul>
+<li>dirty page的识别、按时写入</li>
+<li>支持IO请求的不同优先级</li>
+</ul>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241011174537920.png" alt="image-20241011174537920" style="zoom: 33%;">
+
+
+
+<ul>
+<li>定制化的replce策略<ul>
+<li>还是那句话, 抛开workload谈优化都是耍流氓, 数据库的workload和OS的显然不同比如LRU-K vs LRU</li>
+</ul>
+</li>
+</ul>
+<p>DBMS在进行IO时仍然使用Linux的IO的api , 但是会通过O_DIRECT选项设置来跳过page table</p>
+<h1 id="lec7-HashTable"><a href="#lec7-HashTable" class="headerlink" title="lec7 HashTable"></a>lec7 HashTable</h1><h6 id="课程脉络"><a href="#课程脉络" class="headerlink" title="课程脉络"></a>课程脉络</h6><p>总揽一下现在学到哪了还是很重要的<br><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241012105720229.png" alt="image-20241012105720229"></p>
+<p>本lec主要介绍了哈希数据结构以及解决hash冲突的静态方法和动态方法, 属于数据结构的内容</p>
+<h6 id="线性探测法-开放定址法"><a href="#线性探测法-开放定址法" class="headerlink" title="线性探测法&#x2F;开放定址法"></a>线性探测法&#x2F;开放定址法</h6><ul>
+<li><p>如何插入</p>
+</li>
+<li><p>如何删除</p>
+</li>
+<li><p><strong>有何问题</strong>(详见slides)</p>
+</li>
+<li><p><strong>解决方案</strong></p>
+<ul>
+<li>rehash</li>
+<li>Tombstone: 在插入&#x2F;删除时表现出双标</li>
+</ul>
+</li>
+<li><p><strong>优化方案</strong></p>
+<ul>
+<li>metadata → Packed bitmap tracks whether a slot is empty&#x2F;tombstone.</li>
+</ul>
+</li>
+</ul>
+<h6 id="cuckoo-hashing"><a href="#cuckoo-hashing" class="headerlink" title="cuckoo hashing"></a>cuckoo hashing</h6><blockquote>
+<p>杜鹃鸟喜欢把蛋下在别人窝里</p>
+</blockquote>
+<ul>
+<li>多个hash table , 多个hash function</li>
+<li>如果都不行, 那就执行类似于匈牙利算法的一系列操作直到没有冲突</li>
+<li>插入&#x2F;删除</li>
+</ul>
+<h6 id="静态解决方案的问题"><a href="#静态解决方案的问题" class="headerlink" title="静态解决方案的问题"></a>静态解决方案的问题</h6><p>前面两种都属于静态解决方案 , 最严重的就是，这种策略下能存储的KV（键值对）的数量有限，因为哈希槽的数量固定，这迫使DBMS必须提前知道未来最多能存多少数据，不能依据实际的负载去伸缩</p>
+<p>下面介绍动态方案</p>
+<h6 id="chained-hashing"><a href="#chained-hashing" class="headerlink" title="chained hashing"></a>chained hashing</h6><p>也叫拉链法, 其dynamic体现在, bucket pointers的数量和每个bucket的容量是静态的 , 但是bucket的数量是可以动态变化的 , </p>
+<ul>
+<li>bucket这个概念上班经常听到 , 不过不知道是不是一个东西</li>
+<li>bucket满的时候的行为:链式新增</li>
+<li>增删查改的行为:<ul>
+<li>增: 如下图所示 , 链式新增</li>
+<li>删: slides没有细说, 不过这种方式也会有和前面的线性探测类似的问题: 删除了一个中间的K-V组合之后, 会影响后续的lookup, 解决方式也类似,:对后面的所有kv组合进行rehash, 或者通过设置Tombstone进行逻辑删除</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241012133545425.png" alt="image-20241012133545425"></p>
+<blockquote>
+<p>写到这里 , 突然意识到自己写的逐渐有点偷工减料了, 很多内容自己觉得理解了就没在blog里面细说, 这其实违背了写blog的初心</p>
+<p>The Feynman Technique is a four-step method for learning and understanding a topic: </p>
+<ol>
+<li>Pick a topic</li>
+</ol>
+<p>   Choose a topic to learn and write down what you already know about it. </p>
+<ol start="2">
+<li>Teach it</li>
+</ol>
+<p>   Explain the topic to someone else, such as a child or someone who is unfamiliar with it. You can write it down, speak it out loud, or explain it to a friend or family member. </p>
+<ol start="3">
+<li>Identify gaps</li>
+</ol>
+<p>   Pay attention to areas where your explanation is unclear or falters. If you can’t answer a question about the topic, you should go back and study it more. </p>
+<ol start="4">
+<li>Simplify</li>
+</ol>
+<p>   Rewrite any complex parts in simpler terms. Use plain language and avoid jargon. </p>
+<p>还有个理论说, 对一个知识掌握程度最高的体现是你能够教会别人</p>
+<p>进而想到, 我之前「问题导向」的笔记方式并不是很好</p>
+<p>所以后面尽可能写地清晰一点吧, 从教会未来忘记这个知识的自己开始, 迭代学习</p>
+</blockquote>
+<h6 id="bloom-filter提高查询效率"><a href="#bloom-filter提高查询效率" class="headerlink" title="bloom filter提高查询效率"></a>bloom filter提高查询效率</h6><p>bloom filter的意义在于, 在进行lookup之前提前进行一次O(1)级别的判断 , 能够筛掉一部分不必要的lookup</p>
+<p>具体实现是, 开一个hash数组初始化,我们希望达到的目标是:</p>
+<ul>
+<li>对于数组中 , hash(key)索引对应的数组元素值为0 , 那么这个key一定不存在</li>
+<li>如果为1 , 那么可能存在(positive false)</li>
+</ul>
+<p>基于这个目标, insert和delete的策略如下:</p>
+<ul>
+<li><p>每次insert时, 先获取key的hash值, 设置对应的hash数组位为1 </p>
+</li>
+<li><p>在删除时 , 不能把对应的1置为0</p>
+</li>
+</ul>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241012141830608.png" alt="image-20241012141830608"></p>
+<p>但是这会有一个问题: 整个数组只会出现0-&gt;1,而不会出现1-&gt;0, 最终收敛状态一定是所有元素都变成1, 此时它就失去了存在的意义</p>
+<p>解决方案</p>
+<ul>
+<li>一种可能的解决方案是, 把简单的0&#x2F;1改成引用计数, insert时+1, delete时-1</li>
+<li>还有一种可能更巧妙的solution: 启用多个bloom filter, 应用不同的hash function, 在insert时, 更新每一个bloom filter, lookup时, 对所有filter的结果进行位与操作, 只要其中一个filter返回0, 那么该key一定不存在</li>
+</ul>
+<h6 id="chaiend-hashing的问题"><a href="#chaiend-hashing的问题" class="headerlink" title="chaiend hashing的问题"></a>chaiend hashing的问题</h6><p>如果某几个key发生hash冲突的概率很大 , 那么最终会退化成链表</p>
+<p>基于此有两种解决方案:</p>
+<ul>
+<li>Extendible Hashing</li>
+<li>Linear Hashing</li>
+</ul>
+<p>都有点复杂, 暂时只是留一个印象</p>
+<h1 id="lec8-B-tree"><a href="#lec8-B-tree" class="headerlink" title="lec8 B+ tree"></a>lec8 B+ tree</h1><p>hash面向的workload 主要是单点的增删查改, 在范围查询这种workload下效率并不高</p>
+<p>面试也很喜欢问B+ tree)</p>
+<h6 id="基本特性"><a href="#基本特性" class="headerlink" title="基本特性"></a>基本特性</h6><ul>
+<li>M路的、 自平衡的、排序树, 支持增删查改, 这里的查还支持顺序查找(sequencical access)</li>
+<li>每个节点中存储的是KV数组</li>
+<li>inner node和leaf node中存储的V内容不同<ul>
+<li>innner: 指向子节点的指针</li>
+<li>leaf: 实际值</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>B tree就不是如此</p>
+</blockquote>
+<ul>
+<li>每个节点有&#x3D;&#x3D;<strong>「least half full」</strong>&#x3D;&#x3D;规则<ul>
+<li>从算法的时间复杂度的角度, 这个规则可以控制树的高度, 降低时间复杂度</li>
+<li>从IO的角度, 它可以控制节点中数据量的大小, 减少IO次数</li>
+<li>为什么刚好是「M&#x2F;2-1」呢? 这也刚好和它的分裂行为相对应 </li>
+<li>同高度的节点之间还有Sibling Pointers来支持sequencial access</li>
+</ul>
+</li>
+</ul>
+<h6 id="leaf-node"><a href="#leaf-node" class="headerlink" title="leaf node"></a>leaf node</h6><ul>
+<li>大小应当尽量是页大小或者其倍数——从而sibling pointer就可以直接使用page ID来进行代替 , 内部的数据组织形式也可以借鉴之前的page layout的slot策略:</li>
+</ul>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014112341368.png" alt="image-20241014112341368" style="zoom: 33%;">
+
+
+
+<ul>
+<li>value: 主流的value内容是下面两类 , 一种是存储该value所在的record ID , ;另一种是直接存储整个value的内容, 这第二种方式实际上就是所谓的&#x3D;&#x3D;Index-organized Storage&#x3D;&#x3D;</li>
+</ul>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014112516957.png" alt="image-20241014112516957" style="zoom: 33%;">
+
+<h6 id="B-tree-vs-B-tree"><a href="#B-tree-vs-B-tree" class="headerlink" title="B tree vs B+ tree"></a>B tree vs B+ tree</h6><p>B tree: 无论是inner node还是leaf node都存储实际value</p>
+<p>-&gt;所以 , 更加节约空间 , 并且从增删改查的时间复杂度的角度 : 定位到某个key的查询深度一定是小于等于整个树的高度的 , 对比于B+ tree , B+tree的查询深度一定是整个树的高度 </p>
+<p>那么问题来了, 无论是空间上还是时间上 , 似乎都是B tree更占优势, 那么为什么主流的DBMS都选择B+ tree呢?</p>
+<ul>
+<li>首先, 你这里对于树的高度的感知太感性了: B+ tree的inner node中不会存储实际value, 这会导致同样大小的node , B+ tree 的node会有更大的fan-out (扇出) , 因此同等条件下B+ tree的高度往往会比B tree更低</li>
+<li>B+ tree不仅仅是tree , 同高度的node之间还有一层链式关系 , 这对于顺序&#x2F;范围的查找非常有效</li>
+<li>稳定性也是一个考量角度, B+ tree的查询的时间与要查询的数据无关, 但是b tree则是会随着查询的key 的不同而波动</li>
+</ul>
+<h6 id="增-删操作"><a href="#增-删操作" class="headerlink" title="增&#x2F;删操作"></a>增&#x2F;删操作</h6><p>保证增&#x2F;删之后始终保持前面提到的特性 ,  具体的规则见slides (感觉代码实现这些规则还是有难度的)</p>
+<p>insert: 在合适的时机对合适的node进行拆分</p>
+<p>delete:在合适的时机对合适的node进行合并, 这里涉及到一个延迟合并的优化</p>
+<h6 id="composite-index"><a href="#composite-index" class="headerlink" title="composite index"></a>composite index</h6><p>aka, 复合索引 , 多个attr组合在一起共同作为key</p>
+<p>无论是hash还是B+tree都可以支持composite index ,但是B+ tree可以支持前缀索引查询, hash则无法支持</p>
+<p>b+tree下 composite index的示例如下:<br><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014152057735.png" alt="image-20241014152057735" style="zoom:33%;"></p>
+<h6 id="duplicate-key-问题"><a href="#duplicate-key-问题" class="headerlink" title="duplicate key 问题"></a>duplicate key 问题</h6><p>我们选择作为索引key的attr可能不一定是表的主键, 在前面lec中提到, 这会带来「回表」的问题 , 除此之外, 这还会导致duplicate key的问题 </p>
+<p>解决方案:</p>
+<ol>
+<li>更新索引时, 在leaf node的key字段新增一个record ID(每个tuple唯一)</li>
+</ol>
+<ul>
+<li>插入前:</li>
+</ul>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014153611750.png" alt="image-20241014153611750" style="zoom:33%;">
+
+<ul>
+<li>插入后:</li>
+</ul>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014153547787.png" alt="image-20241014153547787" style="zoom:33%;">
+
+<ol start="2">
+<li>OVERFLOW LEAF NODES 看slides没看懂…</li>
+</ol>
+<h6 id="clustered-indexes"><a href="#clustered-indexes" class="headerlink" title="clustered indexes"></a>clustered indexes</h6><p>aka.聚簇索引</p>
+<p>索引中key的顺序和实际存储的表中的顺序相同</p>
+<ul>
+<li>推论: 一个table有且仅能有一个clustered index</li>
+</ul>
+<p>好处:</p>
+<ul>
+<li>当我们按照顺序去根据索引去取数据时 , 实际在磁盘上的物理读取顺序是和索引的逻辑顺序是一致的 , 这可以极大提高读取速度</li>
+</ul>
+<p>对于Non-clustered indexes , 读取速度就慢很多 , 解决方案: 先把要读的page暂时存起来 , 收集好之后先排序 , 再按顺序读:</p>
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014172522667.png" alt="image-20241014172522667" style="zoom:33%;">
+
+<img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014172538183.png" alt="image-20241014172538183" style="zoom:33%;">
+
+<p>这种&#x3D;&#x3D;延迟+批处理&#x3D;&#x3D;的处理思想在sys领域中非常常见 , 比如OS中的懒加载 , 前面提到的延迟合并, 以及分布式系统中的commit log都是一个道理</p>
+<h6 id="b-tree-design-choice"><a href="#b-tree-design-choice" class="headerlink" title="b+ tree design choice"></a>b+ tree design choice</h6><ol>
+<li>Node Size</li>
+</ol>
+<ul>
+<li>存储介质与node size相关: </li>
+<li><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014173529655.png" alt="image-20241014173529655"></li>
+<li>workload同样也会影响node size的决策 : 如果Leaf Node Scans比较多 , 那么node size大则效率较高 , 因为一次性可以取更多数据</li>
+<li>如果 Root-to-Leaf Traversals比较多 , 那么node size小则效率更高</li>
+</ul>
+<ol start="2">
+<li>MERGE THRESHOLD 前面在讲b+ tree的删除操作时已经提及</li>
+<li>变长key的存储</li>
+</ol>
+<ul>
+<li>指针法 : 类似于elf的符号表 , 指针指向符号表的表项 , 符号表中存储实际的key</li>
+<li>可变大小的node:比较复杂, 暂不深究</li>
+<li>padding :分配固定容量, 多的酒填充0</li>
+<li>key map&#x2F; indirection: 用类似于前面的page layout中的slot的策略</li>
+</ul>
+<h6 id="B-tree优化方案"><a href="#B-tree优化方案" class="headerlink" title="B+tree优化方案"></a>B+tree优化方案</h6><ol>
+<li>前缀压缩</li>
+</ol>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014175314325.png" alt="image-20241014175314325"></p>
+<ol start="2">
+<li>去重</li>
+</ol>
+<p>对于同一个key存在多组value的case , 让这些tuple共用同一个key . 注意它和前面的索引问题中「duplicate key」的区别 , 这里讨论的是tuple的实际存储 , 前面讨论的是索引</p>
+<p><img src="/2024/10/10/CMU15-445notes-lec6-8/image-20241014185114497.png" alt="image-20241014185114497"></p>
+<ol start="3">
+<li>suffix truncation</li>
+</ol>
+<p>aka.后缀截断 : inner node的作用是且仅是在搜索过程中引导搜索路径走向正确的子树 , 因此 , inner node的key很多时候没有必要存储完整的key , 只要它能正常实现它的功能即可 , 至于截断多少, 怎么截断, 就取决于实际数据对查询精度的要求了</p>
+<ol start="4">
+<li>pointer swizzling</li>
+</ol>
+<p>aka.不太会翻译..</p>
+<p>前面提到, tree ndoe的size一般是page size的整数倍 , treenode中的指针也都是存的是page id , 这就导致, 每次我们拿到这个id之后都需要从page directory中重新检索到实际的memory地址, 这个查询流程在大部分时候是不可避免的 , 但是前面在介绍buffer pool的时候讲述过一种特殊case , 我们可以把某个页面「pin」在buffer pool中 , 这种case下buffer pool的更新不会导致这个page从pool中移除, 换句话说它的memory address是相对固定的, 这种case下 , 可以直接把treenode中的pageid用实际address替换掉 从而节省一次查找的开销</p>
+<ol start="5">
+<li>&#x3D;&#x3D;延迟更新+Log&#x3D;&#x3D;</li>
+</ol>
+<p>综合使用log+延迟更新的策略 , 用一个缓冲区记录数据的update , 定时把缓冲区的内容flush到B+ tree中 , 这个过程中可以对这些变动用一些压缩算法进行压缩 , 提高效率 , 总之最终可以减少数据结构变动的次数 , 减少IO次数</p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/CMU15-445/">CMU15-445</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2024/10/10/CMU15-445notes-lec3-5/"
+                                   title="CMU15-445notes-lec3-5"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec3-5</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Orange@antgroup</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
