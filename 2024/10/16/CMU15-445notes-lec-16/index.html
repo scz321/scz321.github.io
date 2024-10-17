@@ -9,7 +9,7 @@
     
     <title>
         
-            CMU15-445notes-lec9 |
+            CMU15-445notes-lec-16 |
         
         Orange Blog
     </title>
@@ -205,7 +205,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        CMU15-445notes-lec9
+                        CMU15-445notes-lec-16
                     </div>
                 
 
@@ -233,12 +233,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-10-16 00:00:00</span>
+                <span class="datetime">2024-10-16 17:38:25</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Wed Oct 16 2024 01:31:00 GMT+0800">2024-10-16 01:31:00</span>
+                <span class="datetime" data-updated="Thu Oct 17 2024 17:13:44 GMT+0800">2024-10-17 17:13:44</span>
             </span>
         
 
@@ -288,145 +288,112 @@
                     
 
                     
-                         <p>[toc]</p>
-<h1 id="Lec9-索引的并发控制"><a href="#Lec9-索引的并发控制" class="headerlink" title="Lec9 索引的并发控制"></a>Lec9 索引的并发控制</h1><h6 id="两种并发控制辨析"><a href="#两种并发控制辨析" class="headerlink" title="两种并发控制辨析"></a>两种并发控制辨析</h6><p>DBMS中 , 并发的正确性有两大类:</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241015174526139.png" alt="image-20241015174526139" style="zoom:100%;">
-
-<p>logical correctness侧重线程&#x2F;事务层面的正确性 如同slides中所说, 它要求线程只能看到它该看的的东西 , 举例说明 , 一个线程A中的一个事务尝试执行一次转账操作(account a to account b) , 另一个线程B尝试读取a、b账户的余额 , 那么 , logical correctness就要求B线程要么看到A事务执行前的ab余额, 要么看到执行后的ab余额, 但是不能是执行过程中的余额, 因为那将是不确定的结果</p>
+                         <h1 id="lec16-transcation"><a href="#lec16-transcation" class="headerlink" title="lec16 transcation"></a>lec16 transcation</h1><p>前面提到过 , 并发控制是DBMS设计中很重要的一项:<br><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017140741327.png" alt="image-20241017140741327" style="zoom: 100%;"></p>
+<p>前面我们学习过physical层面的并发控制 , 本lec+后面3个lec介绍logical层面的并发控制</p>
+<h6 id="什么是transaction"><a href="#什么是transaction" class="headerlink" title="什么是transaction?"></a>什么是transaction?</h6><p>在DBMS的视角 , 一个txn就是「a sequence of operatinons( R&#x2F;W&#x2F;…) , 这个操作序列要能够支持DBMS对数据一致性和完整性等要求</p>
+<h6 id="transaction-propoties"><a href="#transaction-propoties" class="headerlink" title="transaction propoties"></a>transaction propoties</h6><p>ACID</p>
+<ul>
+<li>atomicity: 之前对『原子性』的理解不够深入, actomicity要求『all or nothing』 , 基于此推导出: 如果一个txn的op中仅仅完成了部分, 那么为了保证all or nothing , 我们还需要提供对应的『撤销』机制</li>
+</ul>
 <blockquote>
-<p>logical correctness :不该看的别看</p>
+<p>在操作系统中的很多宏观上的atomicity的要求都是由底层的原子指令支持的 , 这就导致他天然就是all or nothing 的, 不需要撤销机制的支持, 也因此让我对atomicity的理解出现了偏差</p>
 </blockquote>
+<ul>
+<li>consistency: 简单来说就是 , 任何txn的执行都是让DBMS的『数据状态』从一个有效状态转变成另一个有效状态</li>
+</ul>
+<p>这里着重理解一下『有效状态』:他是『人为』按照业务需求&#x2F;业务逻辑设计的  , 这点在后面讲conflict serilizable的一个案例时会有所体现</p>
+<img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017152547031.png" alt="image-20241017152547031" style="zoom:50%;">
+
 <blockquote>
-<p>上面这段话实际上体现出数据库对数据一致性的要求: </p>
-<p><strong>数据一致性</strong>是指在并发环境中，数据库在&#x3D;&#x3D;任何时间点上的状态&#x3D;&#x3D;都应该是合理的、有效的，并遵守业务规则。对于前面的转账的例子,  在数据库层面, 事务具有原子性 , 所以 , 事务执行过程中的数据视图是不在上述的「任何时间点」中的 </p>
+<p>这里的『数据一致性』和分布式系统中的数据一致性的概念也有所不同, 可以辨析一下, 先留个坑</p>
 </blockquote>
-<p>因此 , logical correctness需要回滚、事务机制的支持.</p>
-<p>physical correctness侧重DBMS内部的数据内容的正确性 , 比如两个线程在没有进行并发控制的情况下同时对某个账户的余额进行写入, 导致数据异常. 这部分的例子后面会有更多, 本lec就是着重讲physical correctnes的</p>
-<blockquote>
-<p>注意体会正确性和一致性的区别 , 对于logical correctness 的转账例子, 数据是正确的 , 但不是一致的</p>
-</blockquote>
-<p>关于latch和lock , 这里着重关注一下Modes的区别</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241015193357056.png" alt="image-20241015193357056" style="zoom:100%;">
-
-
-
-<p>按照slides中的说法 , DBMS中的Latches都属于读写锁:</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241015193702940.png" alt="image-20241015193702940" style="zoom:100%;">
-
-<h6 id="Latch–设计目标"><a href="#Latch–设计目标" class="headerlink" title="Latch–设计目标"></a>Latch–设计目标</h6><p>slides罗列了四点如下 , 这里着重理解一下第二点和第四点 , </p>
-<p>对于第二点, 听起来很显然  , 「在没有冲突时走快速路径」,但是实现时往往会注意不到 , 比如后面在讲B+ tree的并发控制时 , 有个上锁解锁策略看起来很合理, 但是每次都是top-down的顺序上锁解锁 ,会导致在no contention case下 , 对于root node的访问成为瓶颈</p>
-<p>第四点 , 「在latch层面不维护线程队列」, 首先要知道线程队列的作用是, 在线程并发的场景下 , 通过线程队列以及可能的更精细的优先级队列, 来进行线程调度 , 从而实现并发中的「公平」–让多个线程尽可能公平地享用CPU</p>
-<p>这里我们需要考虑一下在latch层面实现这种「公平」的ROI : </p>
-<blockquote>
-<p>ROI : return on investment 上班开会学的词, 活学活用一下doge</p>
-</blockquote>
-<p>还是看它的workload: latch的使用场景是短期访问共享资源 , 它的workload往往是多次使用 , 每次速战速决 , 而每次都要重新维护这个任务队列, 只能说不值 </p>
-<p>所以这个「公平性」就交给后面的logical correctness来保证了</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241015194516549.png" alt="image-20241015194516549" style="zoom:100%;">
-
-
-
-<h6 id="Latch–implemetation"><a href="#Latch–implemetation" class="headerlink" title="Latch–implemetation"></a>Latch–implemetation</h6><p>slides介绍了三种实现方式 </p>
+<ul>
+<li>isolation: txn的执行不会受其他正在执行的txn的影响, 换句话说就是, 其他txn的已经执行的op对DBMS的数据造成的影响对于正在执行的txn来说都是不可见的</li>
+<li>durability : 提交之后永久生效 , 个人感觉主要依赖于可持久化存储介质实现</li>
+</ul>
+<h6 id="txn-implementation"><a href="#txn-implementation" class="headerlink" title="txn implementation"></a>txn implementation</h6><p>基于ACID的要求, 一个极端的实现如下:</p>
+<ul>
+<li>A :每次事务开始时对整个DB做一个快照 , 如果执行成功就write back , 否则就废弃这个副本, 从而支持atomicity</li>
+<li>C&#x2F;I : each txn都是one by one的 , 因此不会有txn并发的问题 , C&#x2F;I的要求都自然支持</li>
+</ul>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017143356996.png" alt="image-20241017143356996"></p>
+<h6 id="atomicity-implementation"><a href="#atomicity-implementation" class="headerlink" title="atomicity implementation"></a>atomicity implementation</h6><p>前面这个strawman system的实现开销显然是无法接受的 , 下面介绍real world的实现</p>
 <ol>
-<li>spinlock</li>
+<li>log</li>
 </ol>
-<p>基于test and set原子指令实现</p>
+<p>log的机制在DBMS&#x2F;OS的各处都很常见 , 这里有一个点值得关注:</p>
 <ul>
-<li><p>优点: 从latch&#x2F;unlatch的角度来说 , 一条机器指令即可实现latch&#x2F;unlatch , 高效</p>
-</li>
-<li><p>缺点: </p>
-<ul>
-<li><ol>
-<li>unscalabe :随着线程数量的增加 , 性能下降越来越严重</li>
-</ol>
-</li>
-<li><blockquote>
-<p>Scalable:计算机科学中，“<strong>scalable</strong>”（可扩展性）的概念指的是系统、网络或应用程序在增加负载（如更多用户、数据或请求）时，能够保持其性能和效率的能力。<strong>可扩展性</strong>确保随着需求的增长，系统能够继续有效运行，而不会出现显著的性能下降或资源瓶颈。</p>
-<p>在考虑多线程的性能问题时 , scalability是一个很重要的衡量指标</p>
-</blockquote>
-</li>
-<li><ol start="2">
-<li>not cache-friendly (理解得不深) 目前的理解是 , 多个线程自旋时, 对应的core中的cache会频繁更新 , 导致患粗一致性的维护的开销很大</li>
-<li>not OS-friendly : 较好理解,自旋操作会浪费CPU资源</li>
-</ol>
-</li>
+<li>不仅在memory中存放日志, disk中同样需要, 换句话说, 我们对log也有持久化的需求</li>
 </ul>
-</li>
-</ul>
+<p>理想情况下 , 自然只需要在内存中根据日志的一系列undo操作来撤销事务即可 , 但是 , 在一些极端情况下会出问题: 比如事务abort的时候发生了断电 , 导致内存中的log数据丢失</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151300275.png" alt="image-20241017151300275"></p>
 <ol start="2">
-<li>mutex</li>
+<li>shadow page</li>
 </ol>
+<p>设计思想上和最开始的strawman design一致</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151624822.png" alt="image-20241017151624822"></p>
+<h6 id="consistency-implementation"><a href="#consistency-implementation" class="headerlink" title="consistency implementation"></a>consistency implementation</h6><p>在应用层define这些constrait , 在txn执行时保证txn前后, 这些约束都满足</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017153041163.png" alt="image-20241017153041163"></p>
+<h6 id="Isolation-theory"><a href="#Isolation-theory" class="headerlink" title="Isolation theory"></a>Isolation theory</h6><p>最开始的那个极端模型里, one by one的机制可以很容易保证Isolation , 但是这种串行的方式是很低效的:</p>
 <ul>
-<li>优点: 获取lock失败时会主动give up cpu</li>
-<li>缺点: 仍然是Non scalabe</li>
+<li>无法利用多核的优势</li>
+<li>浪费很多CPU时间在IO上</li>
 </ul>
-<ol start="3">
-<li>RW lock</li>
-</ol>
-<p>允许并发read , 不允许并发写 , 如下图所示</p>
-<p>每个latch中会记录read和write线程的计数 , 以及等待线程的计数</p>
-<p>如图所示 , 一开始read的线程不会阻塞, 第一次出现write之后, 后续的所有读写操作都会阻塞, 直到write计数变为0之后, 后面的read&#x2F;write线程才能正常获取lock</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241015233647888.png" alt="image-20241015233647888" style="zoom:100%;">
-
-<h6 id="TAS和CAS以及其他原子指令的使用场景以及辨析"><a href="#TAS和CAS以及其他原子指令的使用场景以及辨析" class="headerlink" title="TAS和CAS以及其他原子指令的使用场景以及辨析"></a>TAS和CAS以及其他原子指令的使用场景以及辨析</h6><p>暂时不是本次学习的重点 , 先留个坑~</p>
-<h6 id="hash-index-latch"><a href="#hash-index-latch" class="headerlink" title="hash index latch"></a>hash index latch</h6><ul>
-<li>着重理解一下红框部分 :&#x3D;&#x3D;hash index的数据结构决定了它不会出现死锁&#x3D;&#x3D;<ul>
-<li>无论是哪一种hash index的实现方式, find(key)的执行过程都是「顺序」地对page进行遍历 , 这个「顺序」遍历的过程其实就默默遵照了工业界最常用的死锁避免的策略–lock ordering , 因此 , 不会出现deadlock</li>
-</ul>
-</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-9/image-20241016002510144.png" alt="image-20241016002510144"></p>
+<p>DBMS希望支持txn的并行 , 并且希望在DBMS的视角中最终结果和串行执行的结果一致 , 具体见slides中的例子</p>
 <ul>
-<li>两种粒度 page粒度和slot粒度</li>
+<li>这里的A+B的值恒定, 其实就是在consistency中所谓的数据的「有效状态」</li>
 </ul>
-<p>具体的示例见slides , 这里主要是 , 不同粒度下 , lock的的mode不同 :page粒度下 , rw锁 , slot粒度下 , 单mode锁足矣</p>
-<p>这里其实还是一个trade-off : page粒度下 , 「多个线程同时尝试获取这把锁」的场景出现的概率较大 , 因此 , 维护latch的r&#x2F;w信息</p>
-<p>而slot粒度下 , 这种概率就降低很多 , 所以我们接受小概率情况下的时间开销 , 拒绝维护rw信息的带来的空间开销</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-9/image-20241016002904025.png" alt="image-20241016002904025"></p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154050795.png" alt="image-20241017154050795"></p>
+<p>为了实现这个目标 , 我们就需要精细的concurrency control策略.,</p>
+<p>但是如果op的执行顺序不合理 , 就会出现不符合isolation以及consistency的case:<br><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154427845.png" alt="image-20241017154427845"></p>
+<p>然后slides介绍了一堆理论</p>
 <ul>
-<li>动态扩容场景</li>
+<li>Serial Schedule</li>
+<li>Equivalent Schedules</li>
+<li>Serializable Schedule</li>
 </ul>
-<p>hash table发生动态扩容时 , 直接对整个hash table上一把写锁</p>
-<p>这在实践中是合理的 , 因为扩容并不是一个高频出现的场景</p>
-<p>后面在B+tree中就不是如此 , B+ tree数据结构会高频发生动态变化(split&#x2F;merge) 如果还是直接对整个数据结构用一把大锁 , 那这显然会成为bottleneck , 因此要设计更加复杂的策略</p>
-<h6 id="B-tree-concurency-control"><a href="#B-tree-concurency-control" class="headerlink" title="B+ tree concurency control"></a>B+ tree concurency control</h6><ol>
-<li>general case</li>
-</ol>
-<p>遍历过程中 , 遍历到哪一个node就获取对应的latch , 离开就释放掉</p>
-<ol start="2">
-<li>问题: 如图所示:</li>
-</ol>
-<p>在一些corner case下, 会出现merge&#x2F;split之后的并发问题 ,这里41本来是在篮圈的位置 , 但是44被删除之后 , value重组了一次他的位置改变了 , 但是parent节点的信息还没来得及作同步更新 , 这就会出问题</p>
-<img src="/2024/10/16/CMU15-445notes-lec-9/image-20241016005043588.png" alt="image-20241016005043588" style="zoom:100%;">
-
-<ol start="3">
-<li>solution</li>
-</ol>
-<p>重在体会一下解决问题的思路 , 还是从数据结构本身的特性出发</p>
-<p>出现这种并发问题是因为merge&#x2F;split , 因为我们对B+tree node有「M&#x2F;2-1 , M」的要求</p>
-<p>救赎之道 就在其中(bushi) : 如果在unlatch某个tree node时 , 我们发现node中的kv组数满足下面的条件:</p>
-<ol>
-<li>not full(insert场景)</li>
-<li>not equal to M&#x2F;2 -1(delete场景)</li>
-</ol>
-<p>那么 , 我们认为这个node是thread-safe的 , 就可以安心unlatch , 否则 , 我们需要保留该latch , 具体来说 ,对于insert&#x2F;delete 我们在遍历过程中始终默认获取该node的write latch , 当且仅当出现safe node时, 释放其所有祖先node的latch , 具体例子见slides</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-9/image-20241016011408003.png" alt="image-20241016011408003"></p>
-<h6 id="B-tree在并发场景下的问题"><a href="#B-tree在并发场景下的问题" class="headerlink" title="B+ tree在并发场景下的问题"></a>B+ tree在并发场景下的问题</h6><ol>
-<li>bottleneck</li>
-</ol>
-<p>在前面策略的workload下 , 不难发现 , 在insert&#x2F;delete时 , 对root node的并发访问将会成为bottleneck , 因为任何insert&#x2F;delete都会需要获取rootnode的write latch</p>
-<p>solution:</p>
-<p>「乐观」地用read latch来进行traverse , 如果过程中出现了split&#x2F;merge , 说明乐观的假设失败 , 此时再使用write latch重新遍历</p>
+<p>这里主要理解一下Serializability的概念:</p>
+<p>它是指schedule中的各个txn间的op, 能够基于op的交换规则进行若干次交换之后, 最终转换成和串行sechdule , 换言之, 他们是Equivalent Schedules</p>
+<p>具体来说, 这里的交换规则是, 如果两个「consecutive operation」不是「conflicting operations 」, 那么就是可交换的, excample见slides</p>
 <blockquote>
-<p>这个solution也是基于实际的workload进行设计的: Most modifications to a B+Tree will not require a split or merge.</p>
+<p>conflicting operations:</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017161846764.png" alt="image-20241017161846764"></p>
 </blockquote>
-<ol start="2">
-<li>deadlock</li>
-</ol>
-<p>对b+ tree进行树的top-down遍历时是不会出现deadlock问题的, 原因在前面解释过</p>
-<p>但是有的workload(也是b+ tree的一个很重要的workload)是在leaf node上进行traverse , 此时如果下面的latch mode是write , 那就g</p>
-<p>(比如最近实习在解决的checkAndMutate , 就会在traverse的过程中尝试变更数据)</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-9/image-20241016012531635.png" alt="image-20241016012531635"></p>
+<blockquote>
+<p>这里的三类冲突分别对应八股中很常问的几种case:</p>
+<ul>
+<li>不可重复读: 同一个txn重复读某个obj, 读到的value不同, 对应RWcase</li>
+<li>dirty read:一个txn会读到另一个txn的not comitted的数据: 对应WRcase</li>
+</ul>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170215406.png" alt="image-20241017170215406"></p>
+<ul>
+<li>lost update: 一个事务重写另一个事务uncommitted的数据:</li>
+</ul>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170430871.png" alt="image-20241017170430871"></p>
+</blockquote>
+<p>除了这种基于conflict的serialization策略, 还有一种view serializability , 不过目前还没有DBMS实现:</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017162232132.png" alt="image-20241017162232132"></p>
+<h6 id="Isolation-implementaion"><a href="#Isolation-implementaion" class="headerlink" title="Isolation implementaion"></a>Isolation implementaion</h6><p>上面描述的这种策略在实现上会很麻烦 , 这里仅仅给出了2个txn的case , 随着txn数量的增加, 复杂度也会随之暴增</p>
+<p>更practical的方式是下面这种基于依赖图的算法:</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017163103984.png" alt="image-20241017163103984"></p>
+<ul>
+<li>如果判断出图中有环, 那么这个schedule就一定是not serializable的</li>
+<li>如果没有环 , 那么就是serializable的 ,也就是说 ,</li>
+</ul>
+<p>这里需要注意 , not serializable仅仅是说明 , 这个schedule无法转换成一个有效的串行方案 , </p>
+<p>也意味着Isolation的要求无法满足</p>
+<p>但是这并不意味着他就不符合Consistency的要求 , 例如:</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017164243561.png" alt="image-20241017164243561"></p>
+<p>这里的的一致性要求仅仅是这两个txn结束之后cnt为2 , 并且前置条件是, A,.B的初始值都是很大的正数, 此时, 尽管依赖图中出现了环 , 单并不影响数据一致性</p>
+<h6 id="view-serializability"><a href="#view-serializability" class="headerlink" title="view serializability"></a>view serializability</h6><p>它是基于另一种方式来判断一个schedule是否和串行方案等价</p>
+<blockquote>
+<p>在这里才意识到 , 前面的conflicting operation的方式 , 如果能把一个schedule转换成串行, 说明原来的schdule是serializable的 , 但是这句话反过来是不成立的</p>
+</blockquote>
+<p>例如 , 下面的txn交错执行的schedule 使用前面的方式无法判断出是否serializable:</p>
+<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017171125579.png" alt="image-20241017171125579"></p>
+<p>但是使用基于view serializability就可以判断出来 , view serializability的意思似乎是基于「观察」的可串行化判断 , 这里就能「观察」出这个schedule显然是等价于T1-&gt;T2-&gt;T3&#x2F;T2-&gt;T1-&gt;T3</p>
+<p>但是它的implementation很难, 现在的DBMS基本都不支持</p>
+<h6 id="Isolation和consistency的关系"><a href="#Isolation和consistency的关系" class="headerlink" title="Isolation和consistency的关系"></a>Isolation和consistency的关系</h6><p>我们企图在txn交错执行的时候尽量维护Isolation , 一个很重要目的就是尽可能地减少数据不一致的情况的出现</p>
 
                     
                 </div>
@@ -459,31 +426,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/2024/10/16/CMU15-445notes-lec-16/"
-                                   title="CMU15-445notes-lec-16"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec-16</span>
-                                        <span class="post-nav-item">Prev posts</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2024/10/10/CMU15-445notes-lec6-8/"
-                                   title="CMU15-445notes-lec6-8"
+                                   href="/2024/10/16/CMU15-445notes-lec-9/"
+                                   title="CMU15-445notes-lec9"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec6-8</span>
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec9</span>
                                         <span class="post-nav-item">Next posts</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
