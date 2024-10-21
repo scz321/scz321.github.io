@@ -9,7 +9,7 @@
     
     <title>
         
-            CMU15-445notes-lec-16 |
+            CMU15-445notes-lec17 |
         
         Orange Blog
     </title>
@@ -205,7 +205,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        CMU15-445notes-lec-16
+                        CMU15-445notes-lec17
                     </div>
                 
 
@@ -233,12 +233,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-10-16 17:38:25</span>
+                <span class="datetime">2024-10-17 20:46:53</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Fri Oct 18 2024 14:04:14 GMT+0800">2024-10-18 14:04:14</span>
+                <span class="datetime" data-updated="Mon Oct 21 2024 20:19:56 GMT+0800">2024-10-21 20:19:56</span>
             </span>
         
 
@@ -288,115 +288,83 @@
                     
 
                     
-                         <h1 id="lec16-transcation"><a href="#lec16-transcation" class="headerlink" title="lec16 transcation"></a>lec16 transcation</h1><p>前面提到过 , 并发控制是DBMS设计中很重要的一项:</p>
-<img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017140741327.png" alt="image-20241017140741327" style="zoom: 100%;">
-
-<p>前面我们学习过physical层面的并发控制 , 本lec+后面3个lec介绍logical层面的并发控制</p>
-<h6 id="什么是transaction"><a href="#什么是transaction" class="headerlink" title="什么是transaction?"></a>什么是transaction?</h6><p>在DBMS的视角 , 一个txn就是「a sequence of operatinons( R&#x2F;W&#x2F;…) , 这个操作序列要能够支持DBMS对数据一致性和完整性等要求</p>
-<h6 id="transaction-propoties"><a href="#transaction-propoties" class="headerlink" title="transaction propoties"></a>transaction propoties</h6><p>ACID</p>
-<ul>
-<li>atomicity: 之前对『原子性』的理解不够深入, actomicity要求『all or nothing』 , 基于此推导出: 如果一个txn的op中仅仅完成了部分, 那么为了保证all or nothing , 我们还需要提供对应的『撤销』机制</li>
-</ul>
+                         <h1 id="lec17-两阶段锁"><a href="#lec17-两阶段锁" class="headerlink" title="lec17 两阶段锁"></a>lec17 两阶段锁</h1><h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>lec16中的依赖图算法有一个致命的前置条件: 我们需要首先根据对整个schedule有一个「全知视角」</p>
+<p>然后对schedule进行静态分析 , 构建依赖图 , 进行serializability的判断 , 这在实践中开销比较大</p>
+<p>我们希望有一种方式能够在动态执行时控制不同txn之间的op的执行顺序 , 使得最终呈现出的schedule符合serializability , 这里就依赖于lock机制了</p>
+<h6 id="lock-basics"><a href="#lock-basics" class="headerlink" title="lock basics"></a>lock basics</h6><p>这里的LockMgr , 目前的粗糙理解是一个DBMS一个Mgr , Mgr负责处理lock请求 , 并且维护等待锁的txn队列</p>
 <blockquote>
-<p>在操作系统中的很多宏观上的atomicity的要求都是由底层的原子指令支持的 , 这就导致他天然就是all or nothing 的, 不需要撤销机制的支持, 也因此让我对atomicity的理解出现了偏差</p>
+<p>It keeps track of what transactions hold what locks and what transactions are waiting to acquire any locks.</p>
 </blockquote>
-<ul>
-<li>consistency: 简单来说就是 , 任何txn的执行都是让DBMS的『数据状态』从一个有效状态转变成另一个有效状态</li>
-</ul>
-<p>这里着重理解一下『有效状态』:他是『人为』按照业务需求&#x2F;业务逻辑设计的  , 这点在后面讲conflict serilizable的一个案例时会有所体现</p>
-<img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017152547031.png" alt="image-20241017152547031" style="zoom:50%;">
-
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018114228290.png" alt="image-20241018114228290"></p>
+<h6 id="2-phase-locking"><a href="#2-phase-locking" class="headerlink" title="2 phase locking"></a>2 phase locking</h6><p>为什么需要两阶段:</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018115038875.png" alt="image-20241018115038875"></p>
+<p>一阶段锁无法实现目标 , 这里的「目标」目前的理解是使得最终呈现出的schedule符合serializability , 这里的锁策略无法实现这个目的</p>
+<p>2 phase locking策略 , 可以在宏观上抽象一下: 其实就是相当于把一个txn中涉及的「<strong>共享数据</strong>」作为一个「整体」lock起来, 并且宏观上看, 我们lock且仅lock一次</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018133842054.png" alt="image-20241018133842054"></p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018174019181.png" alt="image-20241018174019181"></p>
+<p>这里对「it needs」没有给出明确的解释 ,但是这在实现这个策略是是很重要的 , 笔者目前的理解是 , 一个schedule中被两个及以上的txn共享的数据需要lock , 否则就不用</p>
 <blockquote>
-<p>这里的『数据一致性』和分布式系统中的数据一致性的概念也有所不同, 可以辨析一下, 先留个坑</p>
+<p>如果所有数据都上锁的话 , 那其实最终的执行效果就完全等价于串行执行了 , 那就已经失去了concurent的本质了, 还会带来锁的额外开销</p>
+<p>当然 , 如果着眼于更小的backgroud, 我们使用2PL策略的初衷是让并发场景下的schedule实现serializable equalivant的话 , 那它还是有意义的 , 所以, 还是看场景, 看workload</p>
 </blockquote>
+<h6 id="问题1-cascading-aborts"><a href="#问题1-cascading-aborts" class="headerlink" title="问题1 cascading aborts"></a>问题1 cascading aborts</h6><p>为什么2PL会出现cascading aborts问题而前面的依赖图算法不会 ?</p>
 <ul>
-<li>isolation: txn的执行不会受其他正在执行的txn的影响, 换句话说就是, 其他txn的已经执行的op对DBMS的数据造成的影响对于正在执行的txn来说都是不可见的</li>
-<li>durability : 提交之后永久生效 , 个人感觉主要依赖于可持久化存储介质实现</li>
+<li>Isolation简单来说就是既要又要: 既要txn并行, 又要txn不受其他txn的「未提交结果」影响 , 依赖图算法通过「依赖图无环」这一现象可以确保txn不受其他txn的「未提交结果」影响 , 从而实现Isolation , 这里的2PL就没有这些考虑 , 所以txn会受到其他txn的uncommitted operation的影响,  我们通过2PL的方式 , 能够保证在txn之间会互相影响的情况下 , 保证schedule 的serializable , 但是在出现txn abort时, 就会出现问题:</li>
 </ul>
-<h6 id="txn-implementation"><a href="#txn-implementation" class="headerlink" title="txn implementation"></a>txn implementation</h6><p>基于ACID的要求, 一个极端的实现如下:</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018174057868.png" alt="image-20241018174057868"></p>
+<p>solution:</p>
+<p>加强版2PL: 如果一个数据被某个txn「写」, 那么直到「写」这个数据的txn结束之前 , 其他txn无法对这个数据进行「写」&#x2F;「读」</p>
+<p>implementation: 对于「共享数据」只有在txn彻底结束时才释放它的lock</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241018174252388.png" alt="image-20241018174252388"></p>
+<h6 id="问题2-deadlock"><a href="#问题2-deadlock" class="headerlink" title="问题2 deadlock"></a>问题2 deadlock</h6><p>显然 , 这里很容易出现ABBA类型的死锁 , 这里主要关注solution</p>
+<p>两种解决方式:</p>
 <ul>
-<li>A :每次事务开始时对整个DB做一个快照 , 如果执行成功就write back , 否则就废弃这个副本, 从而支持atomicity</li>
-<li>C&#x2F;I : each txn都是one by one的 , 因此不会有txn并发的问题 , C&#x2F;I的要求都自然支持</li>
+<li>detection + kill</li>
+<li>prevention :</li>
 </ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017143356996.png" alt="image-20241017143356996"></p>
-<h6 id="atomicity-implementation"><a href="#atomicity-implementation" class="headerlink" title="atomicity implementation"></a>atomicity implementation</h6><p>前面这个strawman system的实现开销显然是无法接受的 , 下面介绍real world的实现</p>
 <ol>
-<li>log</li>
+<li>detection</li>
 </ol>
-<p>log的机制在DBMS&#x2F;OS的各处都很常见 , 这里有一个点值得关注:</p>
+<p>定期检测schedule中是否发生死锁</p>
+<p>implementation: 维护一个等待图 :</p>
 <ul>
-<li>不仅在memory中存放日志, disk中同样需要, 换句话说, 我们对log也有持久化的需求</li>
+<li>node: txn</li>
+<li>arrowed edge: 表示一个txn正在等待另一个txn的资源 , 这里就是lock</li>
 </ul>
-<p>理想情况下 , 自然只需要在内存中根据日志的一系列undo操作来撤销事务即可 , 但是 , 在一些极端情况下会出问题: 比如事务abort的时候发生了断电 , 导致内存中的log数据丢失</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151300275.png" alt="image-20241017151300275"></p>
+<p>这里就能体现出维护一个lockMgr的好处了 , <strong>有了lockMgr的存在 , 资源等待图的维护会容易很多</strong></p>
+<p>定期检测图中是否有环</p>
+<blockquote>
+<p>检测图中是否有环的算法</p>
+<p>@scz todo</p>
+</blockquote>
+<p>检测出死锁之后, 需要根据合理的策略选择一个txn进行roll back或者abort来handle 死锁</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020142635069.png" alt="image-20241020142635069"></p>
 <ol start="2">
-<li>shadow page</li>
+<li>prevention</li>
 </ol>
-<p>设计思想上和最开始的strawman design一致</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151624822.png" alt="image-20241017151624822"></p>
-<h6 id="consistency-implementation"><a href="#consistency-implementation" class="headerlink" title="consistency implementation"></a>consistency implementation</h6><p>在应用层define这些constrait , 在txn执行时保证txn前后, 这些约束都满足</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017153041163.png" alt="image-20241017153041163"></p>
-<h6 id="Isolation-theory"><a href="#Isolation-theory" class="headerlink" title="Isolation theory"></a>Isolation theory</h6><p>最开始的那个极端模型里, one by one的机制可以很容易保证Isolation , 但是这种串行的方式是很低效的:</p>
+<p>按照txn的时序给每个txn分配优先级 , 高优先级的txn尝试获取低优先级的txn的🔒时 , 要么等待 , 要么abort , 总之不可能出现高优先级txn和低优先级txn之间的循环等待</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020145342647.png" alt="image-20241020145342647"></p>
+<h6 id="real-world"><a href="#real-world" class="headerlink" title="real world"></a>real world</h6><p>在前面的2PL的策略下 , lock的粒度很低( <strong>tuple 甚至attribute级别</strong>) , 锁的数量会很多 , 开销很大</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020155206279.png" alt="image-20241020155206279"></p>
+<p>因此 , 我们需要一个更合理的策略来实现lock数量和lock粒度之间的trade off</p>
+<h6 id="hierarchy-lock"><a href="#hierarchy-lock" class="headerlink" title="hierarchy lock"></a>hierarchy lock</h6><p>首先要理解一下intention lock的概念:</p>
 <ul>
-<li>无法利用多核的优势</li>
-<li>浪费很多CPU时间在IO上</li>
+<li><p>一个page&#x2F;tuple&#x2F;其他粒度 的对象被锁上某种mode的intention lock , 说明在它的内部有某个更小粒度的对象被锁上了该mode的explicit lock( 和intention lock相对 , 表示真正的lock)</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020155819196.png" alt="image-20241020155819196"></p>
+</li>
 </ul>
-<p>DBMS希望支持txn的并行 , 并且希望在DBMS的视角中最终结果和串行执行的结果一致 , 具体见slides中的例子</p>
+<p>intention lock分为3种:</p>
 <ul>
-<li>这里的A+B的值恒定, 其实就是在consistency中所谓的数据的「有效状态」</li>
+<li>IS e.g. table含有的tuple中有被上共享锁的</li>
+<li>IX e.g. table含有的tuple中有被上排他锁的</li>
+<li>SIX e.g. table含有的tuple中有被上排他锁的，并且整个table也被上了共享锁</li>
 </ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154050795.png" alt="image-20241017154050795"></p>
-<p>为了实现这个目标 , 我们就需要精细的concurrency control策略</p>
-<p>但是如果op的执行顺序不合理 , 就会出现不符合isolation以及consistency的case:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154427845.png" alt="image-20241017154427845"></p>
-<p>然后slides介绍了一堆理论</p>
-<ul>
-<li>Serial Schedule</li>
-<li>Equivalent Schedules</li>
-<li>Serializable Schedule</li>
-</ul>
-<p>这里主要理解一下Serializability的概念:</p>
-<p>它是指schedule中的各个txn间的op, 能够基于op的交换规则进行若干次交换之后, 最终转换成和串行sechdule , 换言之, 他们是Equivalent Schedules</p>
-<p>具体来说, 这里的交换规则是, 如果两个「consecutive operation」不是「conflicting operations 」, 那么就是可交换的, excample见slides</p>
-<blockquote>
-<p>conflicting operations:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017161846764.png" alt="image-20241017161846764"></p>
-</blockquote>
-<blockquote>
-<p>这里的三类冲突分别对应八股中很常问的几种case:</p>
-<ul>
-<li>不可重复读: 同一个txn重复读某个obj, 读到的value不同, 对应RWcase</li>
-<li>dirty read:一个txn会读到另一个txn的not comitted的数据: 对应WRcase</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170215406.png" alt="image-20241017170215406"></p>
-<ul>
-<li>lost update: 一个事务重写另一个事务uncommitted的数据:</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170430871.png" alt="image-20241017170430871"></p>
-</blockquote>
-<p>除了这种基于conflict的serialization策略, 还有一种view serializability , 不过目前还没有DBMS实现:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017162232132.png" alt="image-20241017162232132"></p>
-<h6 id="Isolation-implementaion"><a href="#Isolation-implementaion" class="headerlink" title="Isolation implementaion"></a>Isolation implementaion</h6><p>上面描述的这种策略在实现上会很麻烦 , 这里仅仅给出了2个txn的case , 随着txn数量的增加, 复杂度也会随之暴增</p>
-<p>更practical的方式是下面这种基于依赖图的算法:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017163103984.png" alt="image-20241017163103984"></p>
-<ul>
-<li>如果判断出图中有环, 那么这个schedule就一定是not serializable的</li>
-<li>如果没有环 , 那么就是serializable的 ,也就是说 ,</li>
-</ul>
-<p>这里需要注意 , not serializable仅仅是说明 , 这个schedule无法转换成一个有效的串行方案 , </p>
-<p>也意味着Isolation的要求无法满足</p>
-<p>但是这并不意味着他就不符合Consistency的要求 , 例如:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017164243561.png" alt="image-20241017164243561"></p>
-<p>这里的的一致性要求仅仅是这两个txn结束之后cnt为2 , 并且前置条件是, A,.B的初始值都是很大的正数, 此时, 尽管依赖图中出现了环 , 单并不影响数据一致性</p>
-<h6 id="view-serializability"><a href="#view-serializability" class="headerlink" title="view serializability"></a>view serializability</h6><p>它是基于另一种方式来判断一个schedule是否和串行方案等价</p>
-<blockquote>
-<p>在这里才意识到 , 前面的conflicting operation的方式 , 如果能把一个schedule转换成串行, 说明原来的schdule是serializable的 , 但是这句话反过来是不成立的</p>
-</blockquote>
-<p>例如 , 下面的txn交错执行的schedule 使用前面的方式无法判断出是否serializable:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017171125579.png" alt="image-20241017171125579"></p>
-<p>但是使用基于view serializability就可以判断出来 , view serializability的意思似乎是基于「观察」的可串行化判断 , 这里就能「观察」出这个schedule显然是等价于T1-&gt;T2-&gt;T3&#x2F;T2-&gt;T1-&gt;T3</p>
-<p>但是它的implementation很难, 现在的DBMS基本都不支持</p>
-<h6 id="Isolation和consistency的关系"><a href="#Isolation和consistency的关系" class="headerlink" title="Isolation和consistency的关系"></a>Isolation和consistency的关系</h6><p>我们企图在txn交错执行的时候尽量维护Isolation , 一个很重要目的就是尽可能地减少数据不一致的情况的出现</p>
+<p>注意这里的第三种SIX: 它是指当前的node已经被加上了shared explicit lock , 并且内部有node被加上了exclusive node</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020165515682.png" alt="image-20241020165515682"></p>
+<p>具体的lock&#x2F;unlock协议如下:</p>
+<p>要理解这张表格 , 其实主要还是对这5种状态要足够理解</p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020170511361.png" alt="image-20241020170511361"></p>
+<p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020170617262.png" alt="image-20241020170617262"></p>
 
                     
                 </div>
@@ -429,31 +397,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/2024/10/17/CMU15-445notes-lec17/"
-                                   title="CMU15-445notes-lec17"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec17</span>
-                                        <span class="post-nav-item">Prev posts</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2024/10/16/CMU15-445notes-lec-9/"
-                                   title="CMU15-445notes-lec9"
+                                   href="/2024/10/16/CMU15-445notes-lec-16/"
+                                   title="CMU15-445notes-lec-16"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec9</span>
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec-16</span>
                                         <span class="post-nav-item">Next posts</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
