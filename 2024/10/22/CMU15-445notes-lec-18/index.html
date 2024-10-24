@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Orange@antgroup">
+    
+    <title>
+        
+            CMU15-445notes-lec-18 |
+        
+        Orange Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Orange Blog","author":"Orange@antgroup","avatar":"/images/avatar.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":false,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":false},"social_contact":{"enable":false,"links":{"github":"scz321","weixin":"surf_and_die","qq":1543132812,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":null,"category":false,"tag":false,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"toc":{"enable":false,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":null,"reaction":false,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":false},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Orange Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        CMU15-445notes-lec-18
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Orange@antgroup</span>
+                                
+                                    <span class="author-badge">Lv1</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-10-22 11:18:37</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Wed Oct 23 2024 17:01:43 GMT+0800">2024-10-23 17:01:43</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/">cs公开课学习</a></li>
+                        
+                    
+                            <li class="category-item">&nbsp;<i class="icon fas fa-angle-right"></i>&nbsp;<a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/CMU15-445/">CMU15-445</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h6 id="并发控制策略总览"><a href="#并发控制策略总览" class="headerlink" title="并发控制策略总览"></a>并发控制策略总览</h6><p>这里的concurrency control approaches都属于是txn「动态」执行case下 , 对txn执行流的控制策略 , 这里的「动态」是和前面的调度图的「静态」策略相对应的</p>
+<p>**对于这种「动态」策略 , 经常会区分「乐观」和「悲观」这两类 **</p>
+<ul>
+<li>pessimistic : 总是作最坏的打算 , 在执行过程中的每一个局部决策都需要避免冲突的发生</li>
+<li>optimistic : 总是作最好的打算 , 只有在冲突发生的时候才考虑对冲突进行处理</li>
+</ul>
+<blockquote>
+<p>生活中 , 还是做一个pessimistic的人比较好</p>
+</blockquote>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241022201208536.png" alt="image-20241022201208536"></p>
+<p>这里重要的point在于 , 结合这3个例子 , 对「pessimistic」和「optimistic」这两种思想有一个更好的理解</p>
+<h6 id="2PL中的pessimictic思想"><a href="#2PL中的pessimictic思想" class="headerlink" title="2PL中的pessimictic思想"></a>2PL中的pessimictic思想</h6><p>在数据库的txn并行的场景下 , 「冲突」其实就是前面提到过的txn之间R&#x2F;W顺序的问题</p>
+<p>2PL这种策略 下, 当txn尝试W&#x2F;R共享数据时 , 我们始终按照最坏情况处理 , 也就是W&#x2F;R共享数据会发生冲突 , 因此不管三七二十一 , 直接加锁</p>
+<h6 id="ts-ordering策略"><a href="#ts-ordering策略" class="headerlink" title="ts ordering策略"></a>ts ordering策略</h6><p>给每一个txn分配一个时间戳 , 在该策略下 , schedule内txn最终执行效果将等价于 按照时序顺序排列的serial schedule </p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241022204258663.png" alt="image-20241022204258663"></p>
+<p>我们为每一个object记录它的W-ts和R-ts , 每当该Obj被某个txnW&#x2F;R时 , 根据当前的Obj-ts和txn-ts的大小关系以及txn的类型 , 按照pessimistic思想进行冲突避免:</p>
+<p>这里我们首先需要明确txn之间的读写规则: </p>
+<ol>
+<li>对于同一个Obj , 「新txn」对「旧txn」的W&#x2F;R都是合法的</li>
+</ol>
+<p>这一点很好理解 , 因为在ts ordering策略的定义中 , 我们希望:</p>
+<blockquote>
+<p>在该策略下 , schedule内txn最终执行效果将等价于 按照时序顺序排列的serial schedule</p>
+</blockquote>
+<ol start="2">
+<li>对同一个Obj , 「旧txn」对「新txn」的W是不合法的(无论该Obj是被新txn读过还是写过) , 对于R 要分情况讨论:<ol>
+<li>Obj被新txn写过 , 这种情况不合法</li>
+<li>Obj被新txn读过, 这种情况合法</li>
+</ol>
+</li>
+</ol>
+<p>这里2下面的两种情况就对应了slides的两条规则:</p>
+<p>注意这里都强调了 , 无论是读还是写 , 都需要在内部做一份local copy to ensure repeatable read ,这感觉有点奇怪 , 因为理论上来说,基于前面的策略, 是不会出现unrepeatable read的情况的:</p>
+<ol>
+<li>新txn对旧txn的Obj进行W–允许发生</li>
+<li>旧txn对新txn写过的Obj进行R–不允许发生</li>
+</ol>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023003926582.png" alt="image-20241023003926582"></p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023003941198.png" alt="image-20241023003941198"></p>
+<h6 id="优化1-thomas-rule"><a href="#优化1-thomas-rule" class="headerlink" title="优化1 thomas rule"></a>优化1 thomas rule</h6><p>前面我们提到:</p>
+<blockquote>
+<p>对同一个Obj , 「<strong>旧txn」对「新txn」的W是不合法的(无论该Obj是被新txn读过还是写过)</strong> , 对于R 要分情况讨论:</p>
+<ol>
+<li>Obj被新txn写过 , 这种情况不合法</li>
+<li>Obj被新txn读过, 这种情况合法</li>
+</ol>
+</blockquote>
+<p>Thomas rule对这条规则中的加粗部分进行了优化:</p>
+<p>如果被W的Obj是被新txn R过 , 那么就还是abort , 重启一个ts更大的新txn</p>
+<p>如果被W的Obj是被新txn W过 , 那么就直接忽略旧txn的这次W , 继续txn执行</p>
+<p>(后续如果旧txn尝试R这个Obj , 会由于尝试read future txn导致abort , 因此Thomas rule并不会影响正确性 )</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023005558794.png" alt="image-20241023005558794"></p>
+<h6 id="Q-为什么需要copy-data-to-txn-workspace"><a href="#Q-为什么需要copy-data-to-txn-workspace" class="headerlink" title="Q: 为什么需要copy data to txn workspace?"></a>Q: 为什么需要copy data to txn workspace?</h6><p>slides中给出的解释是 , 为什么支持repeatable read , 但是我并不理解这一点 , 因为按照slides中给出的example , 每次read &#x2F; write都会根据global最新数据及其ts进行操作 ,而不是本地的copy</p>
+<p>这里我的理解是</p>
+<ul>
+<li>对于W的case , 我们对global的最新数据的更新不一定能做到原子化 , 因此如果多个txn尝试对同一个global Obj进行并发W&#x2F;R会出现未知问题 , 所以要先copy一份到本地 , 操作好之后再更新回去</li>
+</ul>
+<p>R的case暂时还没有想到一个很好的解释…</p>
+<h6 id="Optimistic-concurrency-control"><a href="#Optimistic-concurrency-control" class="headerlink" title="Optimistic concurrency control"></a>Optimistic concurrency control</h6><p>乐观和悲观, 其实对应于两种不同的workload , OCC对应的workload的txn特点是:</p>
+<ul>
+<li>short-lived</li>
+<li>rare confilcts</li>
+</ul>
+<p>基本思想是 , 每个txn维护一个workspace , 和前面的T&#x2F;O 策略类似, 我们同样需要把数据copy到本地进行操作 , 在txn提交时 , 再检测是否有冲突发生</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023112311456.png" alt="image-20241023112311456"></p>
+<p>​    具体来说 , 每个txn分3个phase :</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023114559298.png" alt="image-20241023114559298"></p>
+<p>在txn之间的不同的phase的时序关系下 , 对write set&#x2F;read set有不同的要求 :</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023114523124.png" alt="image-20241023114523124"></p>
+<p>OCC策略下我们同样会根据txn的时序顺序为它们分配一个唯一的编号 , 但是这里需要注意 ,这个编号分配的时机是Read phase结束时</p>
+<ul>
+<li>validation phase</li>
+</ul>
+<p>这里还需要考虑一下check direction的问题:</p>
+<ol>
+<li>和(过去的)committed txn的W&#x2F;R sets进行比较</li>
+<li>和(未来的)uncommitted txn的sets进行比较</li>
+</ol>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023125252692.png" alt="image-20241023125252692"></p>
+<p>性能问题:</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023125646648.png" alt="image-20241023125646648"></p>
+<h6 id="realworld"><a href="#realworld" class="headerlink" title="realworld"></a>realworld</h6><p>我们前面所有的策略 , 无论是依赖图这种静态策略 ,还是后面的3种乐观&#x2F;悲观的策略 , 都基于一个前提:</p>
+<ul>
+<li>txn中有且仅有读&#x2F;写 这种最基本的operation</li>
+</ul>
+<p>但是realworld中txn中经常会是复杂的sql语句 , 如下面的例子所示 , </p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023151347267.png" alt="image-20241023151347267"></p>
+<p>解决方案主要有下面三种 , 实践中比较合理的是第二、三种</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023151944405.png" alt="image-20241023151944405"></p>
+<p>谓词锁:</p>
+<p>对于where这种涉及范围的谓词</p>
+<ul>
+<li>如果是SELECT操作 , 就对底层的Objs加shared lock</li>
+<li>如果是INSERT&#x2F;DELETE&#x2F;UPDATE , 就加write lock</li>
+</ul>
+<p>索引锁:</p>
+<p>直接对底层的所有数据上锁开销比较大, 如果有index直接对index 加lock即可</p>
+<p>对少量的index上锁对应到底层就是对一个range上锁</p>
+<p>index lock具体也有不同的实现方式:</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023164521532.png" alt="image-20241023164521532"></p>
+<h6 id="Isolation-level"><a href="#Isolation-level" class="headerlink" title="Isolation level"></a>Isolation level</h6><p>在某些workload下 , 我们始终追求serializability会导致系统的scalability很差 , 此时我们可以尝试用更低的Isolation level来获取更好的scalability</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023164734532.png" alt="image-20241023164734532"></p>
+<p>更低的隔离级别下 , 事务会互相暴露 , 根据暴露程度的不同会引起脏读、不可重复读、幻读问题</p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023165447308.png" alt="image-20241023165447308"></p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241023170139255.png" alt="image-20241023170139255"></p>
+<h6 id="花絮"><a href="#花絮" class="headerlink" title="花絮"></a>花絮</h6><p>水群水到的 , 说的在理</p>
+<p>我目前学得相对入门的两个领域也就是db和os , 但是已经能够感觉到 , 很多系统设计的策略&#x2F;思想 都是共通的 </p>
+<p><img src="/2024/10/22/CMU15-445notes-lec-18/image-20241022172105897.png" alt="image-20241022172105897"></p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/CMU15-445/">CMU15-445</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2024/10/23/CMU15-445notes-lec-19/"
+                                   title="CMU15-445notes-lec-19"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec-19</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2024/10/17/CMU15-445notes-lec17/"
+                                   title="CMU15-445notes-lec17"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec17</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Orange@antgroup</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>

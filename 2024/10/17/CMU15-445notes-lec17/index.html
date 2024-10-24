@@ -238,7 +238,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Mon Oct 21 2024 20:19:56 GMT+0800">2024-10-21 20:19:56</span>
+                <span class="datetime" data-updated="Mon Oct 21 2024 20:25:11 GMT+0800">2024-10-21 20:25:11</span>
             </span>
         
 
@@ -363,6 +363,13 @@
 <p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020165515682.png" alt="image-20241020165515682"></p>
 <p>具体的lock&#x2F;unlock协议如下:</p>
 <p>要理解这张表格 , 其实主要还是对这5种状态要足够理解</p>
+<ul>
+<li>IS :内部有node被explicitly locked in shared mode</li>
+<li>IX :内部有node被explicitly locked in exclusive mode</li>
+<li>S:当前node被<strong>explicitly</strong> locked in shared mode , 这意味着当前node的子node都被lock住 , 例如, 如果当前node是一个table , 那么下层的所有tuple都被lock住</li>
+<li>SIX: 在S的基础上, 其中还有子node被explicitly locked in exclusive mode</li>
+<li>X:当前node被<strong>explicitly</strong> locked in exclusive mode</li>
+</ul>
 <p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020170511361.png" alt="image-20241020170511361"></p>
 <p><img src="/2024/10/17/CMU15-445notes-lec17/image-20241020170617262.png" alt="image-20241020170617262"></p>
 
@@ -396,6 +403,22 @@
 
                 
                     <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2024/10/22/CMU15-445notes-lec-18/"
+                                   title="CMU15-445notes-lec-18"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec-18</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
                         
                         
                             <div class="next-post">
