@@ -238,7 +238,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Fri Oct 25 2024 01:10:32 GMT+0800">2024-10-25 01:10:32</span>
+                <span class="datetime" data-updated="Fri Oct 25 2024 21:13:16 GMT+0800">2024-10-25 21:13:16</span>
             </span>
         
 
@@ -358,6 +358,21 @@
 </ol>
 <p>相对复杂 , 有两种方式 : index中存物理地址(实际tuple地址) or index中存逻辑地址(比如 主键&#x2F;tuple id之类的) , 总之是需要一次回表操作</p>
 <p>两者需要trade off一下</p>
+<h6 id="MVCC和dirty-read-unrepeatable-read"><a href="#MVCC和dirty-read-unrepeatable-read" class="headerlink" title="MVCC和dirty read &#x2F;unrepeatable read"></a>MVCC和dirty read &#x2F;unrepeatable read</h6><p>dirty read &#x2F;unrepeatable read这两个问题都可以仅仅通过MVCC来解决</p>
+<p>unrepeatable read用前面的手绘图的例子就可以解释 , dirty read参考下面的手绘图</p>
+<p>这里我需要注意一下: 我当时认为txn2在RA的时候应该要能读到txn1WA之后的数据视图, 但是实际上这对于isolation来说并不是必须的:</p>
+<p>isolation仅仅要求 :</p>
+<ol>
+<li>不同的txn之间的执行互相不会干扰</li>
+<li>同一个txn在执行过程中的数据视图是一致的</li>
+</ol>
+<p>我这里默认txn2能读到txn1 commit&#x2F;abort之后的结果 , 是因为之前serializable isolation看太多了 , 形成思维定式了</p>
+<p><img src="/2024/10/23/CMU15-445notes-lec-19/image-20241025201807660.png" alt="image-20241025201807660"></p>
+<h6 id="MVCC的delete"><a href="#MVCC的delete" class="headerlink" title="MVCC的delete"></a>MVCC的delete</h6><p>delete本质上和write是等价的, 就是在tuple中维护一些特殊的标志位 , 当删除操作发生时 , 对与之相关的attr进行写</p>
+<p><img src="/2024/10/23/CMU15-445notes-lec-19/image-20241025211226349.png" alt="image-20241025211226349"></p>
+<h6 id="MVCC-和phantom-read"><a href="#MVCC-和phantom-read" class="headerlink" title="MVCC 和phantom read"></a>MVCC 和phantom read</h6><p>无法完全解决 , 我们目前的理解是 , 对于insert导致的幻读 ,无法用mvcc来解决 , 对于delete导致的幻读问题 , 可以解决</p>
+<p>因为MVCC下的delete本质上是write</p>
+<h6 id="MVCC和isolation-serializability"><a href="#MVCC和isolation-serializability" class="headerlink" title="MVCC和isolation &#x2F;serializability"></a>MVCC和isolation &#x2F;serializability</h6><p>结合上面的例子可以分析出 , 支持isolation , 不支持serializable isolation</p>
 
                     
                 </div>
