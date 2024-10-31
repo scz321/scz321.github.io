@@ -9,7 +9,7 @@
     
     <title>
         
-            CMU15-445notes-lec-16 |
+            RAII/rule_of_five |
         
         Orange Blog
     </title>
@@ -205,7 +205,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        CMU15-445notes-lec-16
+                        RAII/rule_of_five
                     </div>
                 
 
@@ -233,12 +233,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-10-16 17:38:25</span>
+                <span class="datetime">2024-10-31 17:44:38</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Fri Oct 18 2024 14:04:14 GMT+0800">2024-10-18 14:04:14</span>
+                <span class="datetime" data-updated="Thu Oct 31 2024 19:07:34 GMT+0800">2024-10-31 19:07:34</span>
             </span>
         
 
@@ -246,10 +246,7 @@
             <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
                 <ul class="post-category-ul">
                     
-                            <li class="category-item"><a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/">cs公开课学习</a></li>
-                        
-                    
-                            <li class="category-item">&nbsp;<i class="icon fas fa-angle-right"></i>&nbsp;<a href="/categories/cs%E5%85%AC%E5%BC%80%E8%AF%BE%E5%AD%A6%E4%B9%A0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                            <li class="category-item"><a href="/categories/cpp-%E9%9A%8F%E8%AE%B0/">cpp 随记</a></li>
                         
                     
                 </ul>
@@ -260,10 +257,7 @@
             <span class="post-tag meta-info-item border-box">
                 <ul class="post-tag-ul">
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/CMU15-445/">CMU15-445</a></li>
-                        
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/cpp/">cpp</a></li>
                         
                     
                 </ul>
@@ -288,115 +282,25 @@
                     
 
                     
-                         <h1 id="lec16-transcation"><a href="#lec16-transcation" class="headerlink" title="lec16 transcation"></a>lec16 transcation</h1><p>前面提到过 , 并发控制是DBMS设计中很重要的一项:</p>
-<img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017140741327.png" alt="image-20241017140741327" style="zoom: 100%;">
-
-<p>前面我们学习过physical层面的并发控制 , 本lec+后面3个lec介绍logical层面的并发控制</p>
-<h6 id="什么是transaction"><a href="#什么是transaction" class="headerlink" title="什么是transaction?"></a>什么是transaction?</h6><p>在DBMS的视角 , 一个txn就是「a sequence of operatinons( R&#x2F;W&#x2F;…) , 这个操作序列要能够支持DBMS对数据一致性和完整性等要求</p>
-<h6 id="transaction-propoties"><a href="#transaction-propoties" class="headerlink" title="transaction propoties"></a>transaction propoties</h6><p>ACID</p>
-<ul>
-<li>atomicity: 之前对『原子性』的理解不够深入, actomicity要求『all or nothing』 , 基于此推导出: 如果一个txn的op中仅仅完成了部分, 那么为了保证all or nothing , 我们还需要提供对应的『撤销』机制</li>
-</ul>
+                         <h1 id="RAII和rule-of-five"><a href="#RAII和rule-of-five" class="headerlink" title="RAII和rule of five"></a>RAII和rule of five</h1><p>先看一段代码</p>
+<p>RAII原则我们都很熟悉 , 遵循RAII原则设计的类一般称作wrapper class 用来实现自动管理资源, 与之相关有一个重要的类的设计原则:rule of five:</p>
 <blockquote>
-<p>在操作系统中的很多宏观上的atomicity的要求都是由底层的原子指令支持的 , 这就导致他天然就是all or nothing 的, 不需要撤销机制的支持, 也因此让我对atomicity的理解出现了偏差</p>
-</blockquote>
-<ul>
-<li>consistency: 简单来说就是 , 任何txn的执行都是让DBMS的『数据状态』从一个有效状态转变成另一个有效状态</li>
-</ul>
-<p>这里着重理解一下『有效状态』:他是『人为』按照业务需求&#x2F;业务逻辑设计的  , 这点在后面讲conflict serilizable的一个案例时会有所体现</p>
-<img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017152547031.png" alt="image-20241017152547031" style="zoom:50%;">
-
-<blockquote>
-<p>这里的『数据一致性』和分布式系统中的数据一致性的概念也有所不同, 可以辨析一下, 先留个坑</p>
-</blockquote>
-<ul>
-<li>isolation: txn的执行不会受其他正在执行的txn的影响, 换句话说就是, 其他txn的已经执行的op对DBMS的数据造成的影响对于正在执行的txn来说都是不可见的</li>
-<li>durability : 提交之后永久生效 , 个人感觉主要依赖于可持久化存储介质实现</li>
-</ul>
-<h6 id="txn-implementation"><a href="#txn-implementation" class="headerlink" title="txn implementation"></a>txn implementation</h6><p>基于ACID的要求, 一个极端的实现如下:</p>
-<ul>
-<li>A :每次事务开始时对整个DB做一个快照 , 如果执行成功就write back , 否则就废弃这个副本, 从而支持atomicity</li>
-<li>C&#x2F;I : each txn都是one by one的 , 因此不会有txn并发的问题 , C&#x2F;I的要求都自然支持</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017143356996.png" alt="image-20241017143356996"></p>
-<h6 id="atomicity-implementation"><a href="#atomicity-implementation" class="headerlink" title="atomicity implementation"></a>atomicity implementation</h6><p>前面这个strawman system的实现开销显然是无法接受的 , 下面介绍real world的实现</p>
+<p>在设计wrapper class时, 下面五个函数只要实现了其中一个, 其他的函数都应该要给出明确定义 , </p>
 <ol>
-<li>log</li>
+<li>析构函数</li>
+<li>拷贝构造</li>
+<li>拷贝赋值</li>
+<li>移动构造</li>
+<li>移动赋值</li>
 </ol>
-<p>log的机制在DBMS&#x2F;OS的各处都很常见 , 这里有一个点值得关注:</p>
 <ul>
-<li>不仅在memory中存放日志, disk中同样需要, 换句话说, 我们对log也有持久化的需求</li>
+<li><p>定义为delete也属于用户明确定义 , 总之用户要明确定义这五个函数的行为 , 保证资源在整个生命周期中都是安全的</p>
+<p>代码实现不遵循rule of five 并不会导致静态编译问题 :对于下面的demo , 删除两个定义为delete的拷贝构造&#x2F;赋值函数仍然可以通过编译 ,但是会运行过程中会有潜在的问题</p>
+</li>
 </ul>
-<p>理想情况下 , 自然只需要在内存中根据日志的一系列undo操作来撤销事务即可 , 但是 , 在一些极端情况下会出问题: 比如事务abort的时候发生了断电 , 导致内存中的log数据丢失</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151300275.png" alt="image-20241017151300275"></p>
-<ol start="2">
-<li>shadow page</li>
-</ol>
-<p>设计思想上和最开始的strawman design一致</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017151624822.png" alt="image-20241017151624822"></p>
-<h6 id="consistency-implementation"><a href="#consistency-implementation" class="headerlink" title="consistency implementation"></a>consistency implementation</h6><p>在应用层define这些constrait , 在txn执行时保证txn前后, 这些约束都满足</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017153041163.png" alt="image-20241017153041163"></p>
-<h6 id="Isolation-theory"><a href="#Isolation-theory" class="headerlink" title="Isolation theory"></a>Isolation theory</h6><p>最开始的那个极端模型里, one by one的机制可以很容易保证Isolation , 但是这种串行的方式是很低效的:</p>
-<ul>
-<li>无法利用多核的优势</li>
-<li>浪费很多CPU时间在IO上</li>
-</ul>
-<p>DBMS希望支持txn的并行 , 并且希望在DBMS的视角中最终结果和串行执行的结果一致 , 具体见slides中的例子</p>
-<ul>
-<li>这里的A+B的值恒定, 其实就是在consistency中所谓的数据的「有效状态」</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154050795.png" alt="image-20241017154050795"></p>
-<p>为了实现这个目标 , 我们就需要精细的concurrency control策略</p>
-<p>但是如果op的执行顺序不合理 , 就会出现不符合isolation以及consistency的case:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017154427845.png" alt="image-20241017154427845"></p>
-<p>然后slides介绍了一堆理论</p>
-<ul>
-<li>Serial Schedule</li>
-<li>Equivalent Schedules</li>
-<li>Serializable Schedule</li>
-</ul>
-<p>这里主要理解一下Serializability的概念:</p>
-<p>它是指schedule中的各个txn间的op, 能够基于op的交换规则进行若干次交换之后, 最终转换成和串行sechdule , 换言之, 他们是Equivalent Schedules</p>
-<p>具体来说, 这里的交换规则是, 如果两个「consecutive operation」不是「conflicting operations 」, 那么就是可交换的, excample见slides</p>
-<blockquote>
-<p>conflicting operations:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017161846764.png" alt="image-20241017161846764"></p>
 </blockquote>
-<blockquote>
-<p>这里的三类冲突分别对应八股中很常问的几种case:</p>
-<ul>
-<li>不可重复读: 同一个txn重复读某个obj, 读到的value不同, 对应RWcase</li>
-<li>dirty read:一个txn会读到另一个txn的not comitted的数据: 对应WRcase</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170215406.png" alt="image-20241017170215406"></p>
-<ul>
-<li>lost update: 一个事务重写另一个事务uncommitted的数据:</li>
-</ul>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017170430871.png" alt="image-20241017170430871"></p>
-</blockquote>
-<p>除了这种基于conflict的serialization策略, 还有一种view serializability , 不过目前还没有DBMS实现:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017162232132.png" alt="image-20241017162232132"></p>
-<h6 id="Isolation-implementaion"><a href="#Isolation-implementaion" class="headerlink" title="Isolation implementaion"></a>Isolation implementaion</h6><p>上面描述的这种策略在实现上会很麻烦 , 这里仅仅给出了2个txn的case , 随着txn数量的增加, 复杂度也会随之暴增</p>
-<p>更practical的方式是下面这种基于依赖图的算法:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017163103984.png" alt="image-20241017163103984"></p>
-<ul>
-<li>如果判断出图中有环, 那么这个schedule就一定是not serializable的</li>
-<li>如果没有环 , 那么就是serializable的 ,也就是说 ,</li>
-</ul>
-<p>这里需要注意 , not serializable仅仅是说明 , 这个schedule无法转换成一个有效的串行方案 , </p>
-<p>也意味着Isolation的要求无法满足</p>
-<p>但是这并不意味着他就不符合Consistency的要求 , 例如:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017164243561.png" alt="image-20241017164243561"></p>
-<p>这里的的一致性要求仅仅是这两个txn结束之后cnt为2 , 并且前置条件是, A,.B的初始值都是很大的正数, 此时, 尽管依赖图中出现了环 , 单并不影响数据一致性</p>
-<h6 id="view-serializability"><a href="#view-serializability" class="headerlink" title="view serializability"></a>view serializability</h6><p>它是基于另一种方式来判断一个schedule是否和串行方案等价</p>
-<blockquote>
-<p>在这里才意识到 , 前面的conflicting operation的方式 , 如果能把一个schedule转换成串行, 说明原来的schdule是serializable的 , 但是这句话反过来是不成立的</p>
-</blockquote>
-<p>例如 , 下面的txn交错执行的schedule 使用前面的方式无法判断出是否serializable:</p>
-<p><img src="/2024/10/16/CMU15-445notes-lec-16/image-20241017171125579.png" alt="image-20241017171125579"></p>
-<p>但是使用基于view serializability就可以判断出来 , view serializability的意思似乎是基于「观察」的可串行化判断 , 这里就能「观察」出这个schedule显然是等价于T1-&gt;T2-&gt;T3&#x2F;T2-&gt;T1-&gt;T3</p>
-<p>但是它的implementation很难, 现在的DBMS基本都不支持</p>
-<h6 id="Isolation和consistency的关系"><a href="#Isolation和consistency的关系" class="headerlink" title="Isolation和consistency的关系"></a>Isolation和consistency的关系</h6><p>我们企图在txn交错执行的时候尽量维护Isolation , 一个很重要目的就是尽可能地减少数据不一致的情况的出现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The IntPtrManager class is a wrapper class that manages an int*. The</span></span><br><span class="line"><span class="comment">// resource that this class is managing is the dynamic memory accessible via</span></span><br><span class="line"><span class="comment">// the pointer ptr_. By the principles of the RAII technique, a wrapper class</span></span><br><span class="line"><span class="comment">// object should not be copyable, since one object is supposed to manage one</span></span><br><span class="line"><span class="comment">// resource. Therefore, the copy assignment operator and copy constructor are</span></span><br><span class="line"><span class="comment">// deleted from this class. However, the class is still moveable from different</span></span><br><span class="line"><span class="comment">// lvalues/owners, and has a move constructor and move assignment operator.</span></span><br><span class="line"><span class="comment">// Another reason that wrapper classes forbid copying is because they destroy</span></span><br><span class="line"><span class="comment">// their resource in the destructor, and if two objects are managing the same</span></span><br><span class="line"><span class="comment">// resource, there is a risk of double deletion of the resource.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">IntPtrManager</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// All constructors of a wrapper class are supposed to initialize a resource.</span></span><br><span class="line">    <span class="comment">// In this case, this means allocating the memory that we are managing.</span></span><br><span class="line">    <span class="comment">// The default value of this pointer&#x27;s data is 0.</span></span><br><span class="line">    <span class="built_in">IntPtrManager</span>() &#123;</span><br><span class="line">      ptr_ = <span class="keyword">new</span> <span class="type">int</span>;</span><br><span class="line">      *ptr_ = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Another constructor for this wrapper class that takes a initial value.</span></span><br><span class="line">    <span class="built_in">IntPtrManager</span>(<span class="type">int</span> val) &#123;</span><br><span class="line">      ptr_ = <span class="keyword">new</span> <span class="type">int</span>;</span><br><span class="line">      *ptr_ = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Destructor for the wrapper class. The destructor must destroy the</span></span><br><span class="line">    <span class="comment">// resource that it is managing; in this case, the destructor deletes</span></span><br><span class="line">    <span class="comment">// the pointer!</span></span><br><span class="line">    ~<span class="built_in">IntPtrManager</span>() &#123;</span><br><span class="line">      <span class="comment">// Note that since the move constructor marks objects invalid by setting</span></span><br><span class="line">      <span class="comment">// their ptr_ value to nullptr, we have to account for this in the </span></span><br><span class="line">      <span class="comment">// destructor. We don&#x27;t want to be calling delete on a nullptr!</span></span><br><span class="line">      <span class="keyword">if</span> (ptr_) &#123;</span><br><span class="line">        <span class="keyword">delete</span> ptr_;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Move constructor for this wrapper class. Note that after the move</span></span><br><span class="line">    <span class="comment">// constructor is called, effectively moving all of other&#x27;s data into</span></span><br><span class="line">    <span class="comment">// the specified instance being constructed, the other object is no</span></span><br><span class="line">    <span class="comment">// longer a valid instance of the IntPtrManager class, since it has</span></span><br><span class="line">    <span class="comment">// no memory to manage. </span></span><br><span class="line">    <span class="built_in">IntPtrManager</span>(IntPtrManager&amp;&amp; other) &#123;</span><br><span class="line">      ptr_ = other.ptr_;</span><br><span class="line">      other.ptr_ = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Move assignment operator for this wrapper class. Similar techniques as</span></span><br><span class="line">    <span class="comment">// the move constructor.</span></span><br><span class="line">    IntPtrManager &amp;<span class="keyword">operator</span>=(IntPtrManager &amp;&amp;other) &#123;</span><br><span class="line">      <span class="keyword">if</span> (ptr_ == other.ptr_) &#123;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (ptr_) &#123;</span><br><span class="line">        <span class="keyword">delete</span> ptr_;</span><br><span class="line">      &#125;</span><br><span class="line">      ptr_ = other.ptr_;</span><br><span class="line">      other.ptr_ = <span class="literal">nullptr</span>;</span><br><span class="line">      <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We delete the copy constructor and the copy assignment operator,</span></span><br><span class="line">    <span class="comment">// so this class cannot be copy-constructed. </span></span><br><span class="line">    <span class="built_in">IntPtrManager</span>(<span class="type">const</span> IntPtrManager &amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    IntPtrManager &amp;<span class="keyword">operator</span>=(<span class="type">const</span> IntPtrManager &amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setter function.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">SetVal</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">      *ptr_ = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getter function.</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">GetVal</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> *ptr_;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> *ptr_;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
                     
                 </div>
@@ -409,11 +313,7 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/CMU15-445/">CMU15-445</a>
-                                    </li>
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/cpp/">cpp</a>
                                     </li>
                                 
                             </ul>
@@ -432,14 +332,14 @@
                             <div class="prev-post">
                                 <a class="prev"
                                    rel="prev"
-                                   href="/2024/10/17/CMU15-445notes-lec17/"
-                                   title="CMU15-445notes-lec17"
+                                   href="/2024/10/31/%E6%90%93%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84iterator%EF%BD%9C%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/"
+                                   title="搓一个简单的iterator｜迭代器失效问题"
                                 >
                                     <span class="left arrow-icon flex-center">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec17</span>
+                                        <span class="post-nav-title-item text-ellipsis">搓一个简单的iterator｜迭代器失效问题</span>
                                         <span class="post-nav-item">Prev posts</span>
                                     </span>
                                 </a>
@@ -449,11 +349,11 @@
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2024/10/16/CMU15-445notes-lec-9/"
-                                   title="CMU15-445notes-lec9"
+                                   href="/2024/10/28/CMU15-445-project0/"
+                                   title="CMU15-445-project0"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CMU15-445notes-lec9</span>
+                                        <span class="post-nav-title-item text-ellipsis">CMU15-445-project0</span>
                                         <span class="post-nav-item">Next posts</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
