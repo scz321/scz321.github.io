@@ -205,6 +205,64 @@
                 <div class="home-post-item-bottom border-box">
                     
                     <h3 class="home-post-title border-box">
+                        <a href="/2024/11/01/shared-ptr/">
+                            智能指针作函数参数的相关问题
+                        </a>
+                    </h3>
+
+                    <div class="home-post-content keep-markdown-body">
+                        
+                            讨论一下关于智能指针作为参数的情况 :
+
+Line 37: 智能指针作引用传入之后 , 引用计数不会发生改变
+
+这是很基础的知识点 , 但是之前忽视了: 
+
+引用类型的对象 , 在结束生命周期时不会触发该对象的析构函数
+
+所以这里也是一个道理, 智能...
+                        
+                    </div>
+
+                    
+
+<div class="post-meta-info-container border-box home">
+    <div class="post-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fa-solid fa-history"></i>&nbsp;<span class="home-post-history"
+                                                                                data-updated="Fri Nov 01 2024 15:36:38 GMT+0800"
+                >2024-11-01 15:36:38</span>
+            </span>
+        
+
+        
+
+        
+
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/2024/11/01/shared-ptr/">Read more&nbsp;<i class="icon fas fa-angle-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-post-item">
+
+                
+
+                <div class="home-post-item-bottom border-box">
+                    
+                    <h3 class="home-post-title border-box">
                         <a href="/2024/10/31/%E6%90%93%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84iterator%EF%BD%9C%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/">
                             搓一个简单的iterator｜迭代器失效问题
                         </a>
@@ -675,62 +733,41 @@ lec6 memory management前面几讲介绍了数据在disk上的存储形式 , 本
                 </div>
             </li>
         
-            <li class="home-post-item">
-
-                
-
-                <div class="home-post-item-bottom border-box">
-                    
-                    <h3 class="home-post-title border-box">
-                        <a href="/2024/10/10/CMU15-445notes-lec3-5/">
-                            CMU15-445notes-lec3-5
-                        </a>
-                    </h3>
-
-                    <div class="home-post-content keep-markdown-body">
-                        
-                            [toc]
-lec1 introcpp Q&amp;A学习网站
-https://www.learncpp.com/cpp-tutorial/chapter-12-summary-and-quiz/
-关系型数据模型中的 , 物理和逻辑分离的理解
-lec...
-                        
-                    </div>
-
-                    
-
-<div class="post-meta-info-container border-box home">
-    <div class="post-meta-info border-box">
-        
-            <span class="meta-info-item border-box">
-                <i class="icon fa-solid fa-history"></i>&nbsp;<span class="home-post-history"
-                                                                                data-updated="Thu Oct 10 2024 19:25:35 GMT+0800"
-                >2024-10-10 19:25:35</span>
-            </span>
-        
-
-        
-
-        
-
-        
-
-        
-        
-        
-        
-    </div>
-
-    
-        <a class="home-read-more" href="/2024/10/10/CMU15-445notes-lec3-5/">Read more&nbsp;<i class="icon fas fa-angle-right"></i></a>
-    
-</div>
-
-                </div>
-            </li>
-        
     </ul>
     
+    <div class="paginator border-box flex-center">
+        <div class="border-box first-page paginator-btn not-allow">
+            <a class="border-box"><i class="fa-solid fa-angle-double-left"></i></a>
+        </div>
+
+        <div class="border-box paginator-btn">
+            <a class="border-box"
+               href="/"
+            ><i class="fa-solid fa-chevron-left"></i></a>
+        </div>
+
+
+        <div class="page-number-box border-box flex-center">
+            <input class="page-number-input border-box base-style"
+                   type="number"
+                   value="1"
+                   min="1"
+                   max="2"
+            /><span class="delimiter base-style">/</span><span class="base-style">2</span>
+        </div>
+
+
+        <div class="border-box paginator-btn allowed">
+            <a class="border-box"
+               href="/page/2/"
+            ><i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+
+        <div class="border-box last-page paginator-btn allowed">
+            <a class="border-box"><i class="fa-solid fa-angle-double-right"></i></a>
+        </div>
+    </div>
+
 
 
 
