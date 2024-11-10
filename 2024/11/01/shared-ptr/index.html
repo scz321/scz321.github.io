@@ -238,7 +238,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Fri Nov 01 2024 17:13:14 GMT+0800">2024-11-01 17:13:14</span>
+                <span class="datetime" data-updated="Fri Nov 01 2024 17:48:45 GMT+0800">2024-11-01 17:48:45</span>
             </span>
         
 
@@ -282,6 +282,10 @@
 <p>这里单独看代码会很让人疑惑: 移动语义发生之后 , 竟然还能够正常读取s2的值(至少我当时编译运行的时候是可以的)</p>
 <p>debug之后发现是因为, 估计是编译器进行了某种优化 , 使得point和s2的地址相同 , 形象点说是, 鸠占鹊巢了</p>
 <p>这里的引用计数的行为也是符合预期的 , 作为引用传递并不会改变引用计数的值</p>
+<hr>
+<p>后记 , 你这里的理解有点离谱:</p>
+<p>无论是左值引用还是右值引用 , 都是给原来的对象创建了一个别名, 你对他们取地址 , 当然都是相同的啊….</p>
+<p>真是上班上昏头了</p>
 <ol start="3">
 <li>性能问题</li>
 </ol>

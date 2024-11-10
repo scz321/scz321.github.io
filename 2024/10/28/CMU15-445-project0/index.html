@@ -238,7 +238,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Thu Oct 31 2024 17:43:26 GMT+0800">2024-10-31 17:43:26</span>
+                <span class="datetime" data-updated="Sun Nov 10 2024 14:11:18 GMT+0800">2024-11-10 14:11:18</span>
             </span>
         
 
@@ -288,7 +288,38 @@
                     
 
                     
-                         <h1 id="P0"><a href="#P0" class="headerlink" title="P0"></a>P0</h1><p>先借助assignment中的链接熟悉一下cpp<a class="link" target="_blank" rel="noopener" href="https://github.com/cmu-db/15445-bootcamp">https://github.com/cmu-db/15445-bootcamp<i class="fas fa-external-link-alt"></i></a></p>
+                         <h1 id="P0-位运算-踩坑总结"><a href="#P0-位运算-踩坑总结" class="headerlink" title="P0 位运算|踩坑总结"></a>P0 位运算|踩坑总结</h1><h6 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h6><p>先借助assignment中的链接熟悉一下cpp<a class="link" target="_blank" rel="noopener" href="https://github.com/cmu-db/15445-bootcamp">https://github.com/cmu-db/15445-bootcamp<i class="fas fa-external-link-alt"></i></a></p>
+<p>为了方便测试, 写了个简单的用于debug的宏:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IN_DEBUG false</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> IN_DEBUG</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG_VAR(var) std::cout&lt;&lt;<span class="string">&quot;[&quot;</span>&lt;&lt;std::left &lt;&lt; std::setw(8)&lt;&lt;__FUNCTION__&lt;&lt;<span class="string">&quot;]&quot;</span>&lt;&lt; \</span></span><br><span class="line"><span class="meta">std::left &lt;&lt; std::setw(8)&lt;&lt;#var&lt;&lt;<span class="string">&quot; = &quot;</span>&lt;&lt;(var)&lt;&lt;std::endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG_VAR(var) do&#123;&#125;while(0);</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h6><p>std::bitset的一些常见用法:</p>
+<ul>
+<li>可以直接使用数字进行二进制初始化</li>
+<li>可以用to_ulong()&#x2F;to_ullong()进行还原</li>
+<li>test&#x2F;set&#x2F;reset</li>
+<li>索引的范围</li>
+<li>idx&#x3D;0对应低位而不是高位</li>
+</ul>
+<p>一些位运算的trick :</p>
+<ul>
+<li><p>如何取出二进制表示的指定位数&#x2F;指定range上的0&#x2F;1? —用位与操作</p>
+<p>例如 , 取出overflow bucket的内容:</p>
+</li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">(</span>msb<span class="meta">&amp;0xFFFFFFF0)&gt;&gt;DENSE_BUCKET_SIZE</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="踩到的坑"><a href="#踩到的坑" class="headerlink" title="踩到的坑"></a>踩到的坑</h6><p>数据类型的使用习惯: </p>
+<p>下面这里一开始没有作static_cast<int> 导致对uint64_t类型的数字取负之后发生负溢出</int></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> HyperLogLog&lt;KeyType&gt;::<span class="built_in">ComputeCardinality</span>() -&gt; <span class="type">void</span> &#123;</span><br><span class="line">  <span class="comment">/** @TODO(student) Implement this function! */</span></span><br><span class="line">  <span class="type">double</span> sum=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">uint64_t</span> i=<span class="number">0</span>;i&lt;size_;++i)&#123;</span><br><span class="line">    <span class="comment">//cout&lt;&lt;&quot;sum:&quot;&lt;&lt;sum&lt;&lt;&quot; -buckets[i]&quot;&lt;&lt;-buckets[i]&lt;&lt;endl;</span></span><br><span class="line">    sum+=std::<span class="built_in">pow</span>(<span class="number">2</span>,-<span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(buckets[i]));</span><br><span class="line">    <span class="comment">//cout&lt;&lt;&quot;sum:&quot;&lt;&lt;sum&lt;&lt;endl;</span></span><br><span class="line">  &#125;</span><br><span class="line">  cardinality_=std::<span class="built_in">floor</span>(CONSTANT*size_*size_/sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>AC😄</p>
+<p><img src="/2024/10/28/CMU15-445-project0/image-20241110141048178.png" alt="image-20241110141048178"></p>
 
                     
                 </div>
